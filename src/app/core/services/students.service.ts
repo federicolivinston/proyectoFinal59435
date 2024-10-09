@@ -3,10 +3,16 @@ import { Student } from '../models/studentModels';
 import { delay, Observable, of } from 'rxjs';
 
 let STUDENTS_DDBB: Student[] = [
-  {idStudent: 'gjatrg', firstName: 'manuel angel', lastName:'diez', email: 'manuel@hotmail.com', dni: 11949567, createdAt: new Date()},
-  {idStudent: 'gjatrb', firstName: 'asuncion', lastName:'pino', email: 'asuncion@hotmail.com', dni: 11949567, createdAt: new Date()},
-  {idStudent: 'gjatrc', firstName: 'manuel angel', lastName:'diez', email: 'manuel@hotmail.com', dni: 11949567, createdAt: new Date()},
-  {idStudent: 'gjatrd', firstName: 'manuel angel', lastName:'diez', email: 'manuel@hotmail.com', dni: 11949567, createdAt: new Date()},
+  {idStudent: 'WRUJBZ', firstName: 'Catalina', lastName:'Sánchez', email: 'catalinasánchez@hotmail.com', dni: 37019227, createdAt: new Date()},
+  {idStudent: 'GNFUVQ', firstName: 'Alejandro', lastName:'García', email: 'alejandrogarcía@hotmail.com', dni: 41168001, createdAt: new Date()},
+  {idStudent: 'PBXQEW', firstName: 'Sofía', lastName:'Rodríguez', email: 'sofíarodríguez@hotmail.com', dni: 25230982, createdAt: new Date()},
+  {idStudent: 'ENPYBP', firstName: 'Miguel', lastName:'López', email: 'miguellópez@hotmail.com', dni: 24270537, createdAt: new Date()},
+  {idStudent: 'CNLEMX', firstName: 'Isabella', lastName:'González', email: 'isabellagonzález@hotmail.com', dni: 32166633, createdAt: new Date()},
+  {idStudent: 'ZYLNFN', firstName: 'David', lastName:'Pérez', email: 'davidpérez@hotmail.com', dni: 37685490, createdAt: new Date()},
+  {idStudent: 'WAETFW', firstName: 'Valentina', lastName:'Martínez', email: 'valentinamartínez@hotmail.com', dni: 38545732, createdAt: new Date()},
+  {idStudent: 'RJTCAE', firstName: 'Diego', lastName:'Ramírez', email: 'diegoramírez@hotmail.com', dni: 46678544, createdAt: new Date()},
+  {idStudent: 'MLJDSA', firstName: 'Emilia', lastName:'Torres', email: 'emiliatorres@hotmail.com', dni: 32800784, createdAt: new Date()},
+  {idStudent: 'BLAAPQ', firstName: 'Mateo', lastName:'Hernandez', email: 'mateohernandez@hotmail.com', dni: 39912295, createdAt: new Date()}
 ];
 
 @Injectable({

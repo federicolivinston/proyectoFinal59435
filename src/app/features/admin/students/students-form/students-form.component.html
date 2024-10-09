@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>New Student</h1>
+<h1 mat-dialog-title>{{ data?.editingStudent ? "Editar" : "Nuevo" }} Alumno</h1>
 
 <div mat-dialog-content>
     <form [formGroup]="studentForm">
@@ -8,8 +8,7 @@
             <mat-label>Nombre</mat-label>
             <input formControlName="firstName" matInput type="text" />
             <mat-error>
-              @if(studentForm.get('firstName')?.hasError('required')) { Este campo es
-              requerido }
+              @if(studentForm.get('firstName')?.invalid) { Ingrese un nombre valido. }
             </mat-error>
           </mat-form-field>
         </div>
@@ -18,8 +17,7 @@
             <mat-label>Apellido</mat-label>
             <input formControlName="lastName" matInput type="text" />
             <mat-error>
-              @if(studentForm.get('lastName')?.hasError('required')) { Este campo es
-              requerido }
+              @if(studentForm.get('lastName')?.hasError('required')) { Ingrese un apellido valido. }
             </mat-error>
           </mat-form-field>
         </div>
@@ -28,18 +26,16 @@
             <mat-label>Email</mat-label>
             <input formControlName="email" matInput type="email" />
             <mat-error>
-              @if(studentForm.get('email')?.hasError('required')) { Este campo es
-              requerido }
+              @if(studentForm.get('email')?.hasError('email')||studentForm.get('email')?.hasError('required')) { Debe ingresar un email valido. }
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col-6">
         <mat-form-field class="example-form-field w-100">
           <mat-label>DNI</mat-label>
-          <input formControlName="dni" matInput type="text" />
+          <input formControlName="dni" matInput type="number"/>
           <mat-error>
-            @if(studentForm.get('dni')?.hasError('required')) { Este campo es
-            requerido }
+            @if(studentForm.get('dni')?.hasError('dniValidator') || studentForm.get('dni')?.hasError('required')) { Ingrese un DNI valido. }
           </mat-error>
         </mat-form-field>
         </div>
@@ -49,5 +45,5 @@
   
   <div mat-dialog-actions>
     <button mat-dialog-close mat-button>Cancelar</button>
-    <button (click)="onSave()" mat-button>Guardar</button>
+    <button (click)="onSave()" mat-button [disabled]="studentForm.invalid">Guardar</button>
   </div>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { generateRandomString } from '../../../../common/utils/utils';
 import { Student } from '../../../../core/models/studentModels';
+import { dniValidator } from '../../../../common/utils/customValidators';
 
 
 interface StudentDialogData {
@@ -24,10 +25,10 @@ export class StudentsFormComponent {
     @Inject(MAT_DIALOG_DATA) public data?: StudentDialogData
   ) {
     this.studentForm = this.formBuilder.group({
-      firstName: [null, [Validators.required]],
-      lastName: [null, [Validators.required]],
-      email: [null, [Validators.required]],
-      dni: [null, [Validators.required]],
+      firstName: [null, [Validators.minLength(3), Validators.required]],
+      lastName: [null, [Validators.minLength(3), Validators.required]],
+      email: [null, [Validators.email,Validators.required]],
+      dni: [null, [dniValidator,Validators.required]],
     });
     this.patchFormValue();
   }
