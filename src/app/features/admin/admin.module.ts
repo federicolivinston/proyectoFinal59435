@@ -5,19 +5,22 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 
 //importaciones particulares
-import { StudentsModule } from './students/students.module';
 import { ShareModule } from '../../common/share.module';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
-    AdminComponent
+    AdminComponent,
+    NavBarComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    StudentsModule,
     ShareModule
   ],
-  exports: [AdminComponent]
+  exports: [
+    AdminComponent,
+    NavBarComponent
+  ]
 })
 export class AdminModule { }

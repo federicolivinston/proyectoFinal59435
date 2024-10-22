@@ -15,6 +15,8 @@ import { UserFullNamePipe } from './pipes/user-full-name.pipe';
 import { TitleFontDirective } from './directives/title-font.directive';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule, MatNavList } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     UserFullNamePipe,
     TitleFontDirective,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatListModule,
+    MatSelectModule
   ]})
 
 export class ShareModule { }

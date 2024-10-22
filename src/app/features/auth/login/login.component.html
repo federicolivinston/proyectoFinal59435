@@ -1,0 +1,27 @@
+<div class="login-container">
+  
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h1>Ingresar: </h1>
+    <mat-form-field class="w-100">
+      <mat-label>Usuario</mat-label>
+      <input matInput formControlName="username" required>
+      <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+        Ingrese el usuario.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Contraseña</mat-label>
+      <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" required/>
+      <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility()" >
+        <mat-icon>{{showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+        Ingrese la contraseña.
+      </mat-error>
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit">Iniciar Sesión</button>
+    <div *ngIf="showLoginError" class="error-message">
+      Usuario o Contraseña invalidos.
+    </div>
+  </form>
+</div>

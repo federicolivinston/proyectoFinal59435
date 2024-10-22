@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>{{ data?.editingCourse ? "Editar" : "Nuevo" }} Curso</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="courseForm">
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Titulo</mat-label>
+            <input formControlName="title" matInput type="text" />
+            <mat-error>
+              @if(courseForm.get('title')?.invalid) { Ingrese un titulo valido. }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Grado</mat-label>
+            <mat-select formControlName="degree">
+              <mat-option *ngFor="let option of degreeOptions" [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-select>
+            <!--<input formControlName="degree" matInput type="text" />-->
+            <mat-error>
+              @if(courseForm.get('degree')?.hasError('required')) { Ingrese el grado. }
+            </mat-error>
+          </mat-form-field>
+        </div>
+    </div>    
+    </form>
+</div>
+  
+  <div mat-dialog-actions>
+    <button mat-dialog-close mat-button>Cancelar</button>
+    <button (click)="onSave()" mat-button [disabled]="courseForm.invalid">Guardar</button>
+  </div>

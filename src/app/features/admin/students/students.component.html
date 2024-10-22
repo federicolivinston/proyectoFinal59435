@@ -10,7 +10,7 @@
 @if (isLoading) {
   <div class="spinnerContainer"><mat-spinner></mat-spinner></div>
   } @else {  
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 rounded-table">
+  <table mat-table [dataSource]="students$" class="mat-elevation-z8 rounded-table">
     
       <!-- Position Column -->
       <ng-container matColumnDef="idStudent">

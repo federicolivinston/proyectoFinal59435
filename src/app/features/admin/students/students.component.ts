@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StudentsFormComponent } from './students-form/students-form.component';
 import { StudentsService } from '../../../core/services/students.service';
 import { Student } from '../../../core/models/studentModels';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-students',
@@ -10,9 +11,9 @@ import { Student } from '../../../core/models/studentModels';
   styleUrl: './students.component.scss'
 })
 
-export class StudentsComponent implements OnInit{
+export class StudentsComponent  implements OnInit{
+  students$: Observable<Student[]> = of([]);
   displayedColumns: string[] = ['idStudent', 'fullName', 'email', 'dni', 'actions'];
-  dataSource: Student[] = [];
 
   isLoading = false;
 
@@ -21,38 +22,36 @@ export class StudentsComponent implements OnInit{
       private studentsService: StudentsService
     ){}
 
-  ngOnInit(): void {
-    this.loadStudents();
-  }
+    ngOnInit(): void {
+      this.loadStudents();
+    }
 
-  loadStudents(): void {
-    this.isLoading = true;
-    this.studentsService.getStudents().subscribe({
-      next: (students) => {
-        this.dataSource = students;
-      },
-      error: () => {
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
-  }
-
-  onDelete(id: string) {
-    if (confirm('Esta seguro?')) {
-      // this.dataSource = this.dataSource.filter((user) => user.id !== id);
+    loadStudents():void{
       this.isLoading = true;
-      this.studentsService.removeStudentById(id).subscribe({
-        next: (students) => {
-          this.dataSource = students;
+      this.students$ = this.studentsService.getStudents();
+      this.students$.subscribe({
+        next: () => {
         },
         error: (err) => {
+          console.error(err);
           this.isLoading = false;
         },
         complete: () => {
           this.isLoading = false;
+        },
+      });
+    }
+
+  onDelete(id: string) {
+    if (confirm('Esta seguro?')) {
+      this.studentsService.removeStudentById(id).subscribe({
+        next: (students) => {
+        },
+        error: (err) => {
+          this.loadStudents();
+        },
+        complete: () => {
+          this.loadStudents();
         },
       });
     }
@@ -68,29 +67,33 @@ export class StudentsComponent implements OnInit{
       .afterClosed()
       .subscribe({
         next: (result) => {
+          this.isLoading = true;
           if (!!result) {
             if (editingStudent) {
-              this.handleUpdate(editingStudent.idStudent, result);
+              this.studentsService.updateStudentById(editingStudent.idStudent, result).subscribe({
+                next: (students) => {
+                },
+                error: (err) => {
+                  this.loadStudents();
+                },
+                complete: () => {
+                  this.loadStudents();
+                },
+              });
             } else {
-              this.dataSource = [...this.dataSource, result];
+              this.studentsService.createStudent(result).subscribe({
+                next: (students) => {
+                },
+                error: (err) => {
+                  this.loadStudents();
+                },
+                complete: () => {
+                  this.loadStudents();
+                },
+              });
             }
           }
-        },
+        }
       });
-  }
-
-  handleUpdate(id: string, update: Student): void {
-    this.isLoading = true;
-    this.studentsService.updateStudentById(id, update).subscribe({
-      next: (students) => {
-        this.dataSource = students;
-      },
-      error: (err) => {
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
   }
 }

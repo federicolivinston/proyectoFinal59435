@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from '../../core/models/userModels';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -7,4 +10,10 @@ import { Component } from '@angular/core';
 })
 export class AdminComponent {
   showFiller = false;
+
+  authUser$: Observable<User | null>;
+
+  constructor(private authService: AuthService) {
+    this.authUser$ = this.authService.authUser$;
+  }
 }

@@ -5,25 +5,19 @@
     <span class="example-spacer"></span>    
     <div class="title-container">
         <img class="logo" src="images/logo.jpg" alt="">
-        <span>University of the Highlands and Islands</span>
+        <span>Universidad Argentina del interior</span>
     </div>
     <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon" aria-label="">
-      <mat-icon>logout</mat-icon>
-    </button>
+    <div class="userName" *ngIf="authUser$ | async; let authUser">{{authUser | userFullName:true }}</div>
 </mat-toolbar>
 <mat-drawer-container class="example-container" autosize>
     <!--sidebar content-->
     <mat-drawer #drawer class="example-sidenav" mode="side">
-        <div class="menuButtonsContainer">
-            <span>Administrar Alumnos</span>
-            <span>Administrar Cursos</span>
-            <span>Administrar Catedras</span>
-        </div>
+        <app-nav-bar/>
     </mat-drawer>
     <!--general content-->
     <div class="example-sidenav-content">
-        <app-students/>
+        <router-outlet></router-outlet>
     </div>
 </mat-drawer-container>
 <footer class="footer">

@@ -1,7 +1,7 @@
-export interface Student {
+import { Person } from "./personModels";
+
+export interface Student extends Person{
     idStudent: string;
-    firstName: string;
-    lastName: string;
     email: string;
     dni: number;
     createdAt: Date;
