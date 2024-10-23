@@ -1,0 +1,15 @@
+<mat-card *ngIf="chair" class="example-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>{{chair.course}}</mat-card-title>
+        <button mat-button (click)="goBack()">Volver</button>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-list role="list">
+            <mat-list-item role="listitem">Profesor: {{chair.profesor}}</mat-list-item>
+            <mat-list-item role="listitem">Comienza: {{chair.startDate | date: 'dd/mm/yyyy'}}</mat-list-item>
+            <mat-list-item role="listitem">Vacantes Habilitadas: {{chair.vacants}}</mat-list-item>
+          </mat-list>
+    </mat-card-content>
+  </mat-card>

@@ -4,6 +4,7 @@ import { StudentsFormComponent } from './students-form/students-form.component';
 import { StudentsService } from '../../../core/services/students.service';
 import { Student } from '../../../core/models/studentModels';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-students',
@@ -19,7 +20,8 @@ export class StudentsComponent  implements OnInit{
 
   constructor(
       private dialog: MatDialog,
-      private studentsService: StudentsService
+      private studentsService: StudentsService,
+      private router: Router
     ){}
 
     ngOnInit(): void {
@@ -95,5 +97,9 @@ export class StudentsComponent  implements OnInit{
           }
         }
       });
+  }
+
+  goToDetail(id: string): void {
+    this.router.navigate(['/admin/alumnos', id]);
   }
 }

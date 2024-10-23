@@ -5,12 +5,14 @@ import { ChairsRoutingModule } from './chairs-routing.module';
 import { ShareModule } from '../../../common/share.module';
 import { ChairsComponent } from './chairs.component';
 import { ChairsFormComponent } from './chairs-form/chairs-form.component';
+import { ChairsDetailComponent } from './chairs-detail/chairs-detail.component';
 
 
 @NgModule({
   declarations: [
     ChairsComponent,
-    ChairsFormComponent
+    ChairsFormComponent,
+    ChairsDetailComponent
   ],
   imports: [
     CommonModule,

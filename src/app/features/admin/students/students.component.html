@@ -40,6 +40,9 @@
       <ng-container matColumnDef="actions">
           <th appTitleFont mat-header-cell *matHeaderCellDef> Acciones </th>
           <td mat-cell *matCellDef="let student">
+            <button (click)="goToDetail(student.idStudent)" mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
             <button (click)="openForm(student)" mat-icon-button>
               <mat-icon>edit</mat-icon>
             </button>

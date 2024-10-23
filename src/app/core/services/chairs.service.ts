@@ -22,6 +22,11 @@ export class ChairsService {
     return of(CHAIRS_DDBB).pipe(delay(1000));
   }
 
+  getChairById(id: string): Observable<Chair | null> {
+    let chair = CHAIRS_DDBB.find((chair) => chair.idChair == id) || null;
+    return of(chair).pipe(delay(1000));
+  }
+
   createChair(data: Omit<Chair, 'idChair'>): Observable<Chair[]> {
     CHAIRS_DDBB.push({ ...data, idChair: generateRandomString(6) });
     return this.getChairs();

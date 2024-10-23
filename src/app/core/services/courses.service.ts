@@ -24,6 +24,11 @@ export class CoursesService {
     return of(COURSES_DDBB).pipe(delay(1000));
   }
 
+  getCourseById(id: string): Observable<Course | null> {
+    let course = COURSES_DDBB.find((course) => course.idCourse == id) || null;
+    return of(course).pipe(delay(1000));
+  }
+
   createCourse(data: Omit<Course, 'idCourse'>): Observable<Course[]> {
     COURSES_DDBB.push({ ...data, idCourse: generateRandomString(6) });
     return this.getCourses();

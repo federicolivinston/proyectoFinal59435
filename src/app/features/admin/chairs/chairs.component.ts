@@ -4,6 +4,7 @@ import { Chair } from '../../../core/models/chairModels';
 import { MatDialog } from '@angular/material/dialog';
 import { ChairsService } from '../../../core/services/chairs.service';
 import { ChairsFormComponent } from './chairs-form/chairs-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chairs',
@@ -19,7 +20,8 @@ export class ChairsComponent implements OnInit{
 
   constructor(
       private dialog: MatDialog,
-      private chairsService: ChairsService
+      private chairsService: ChairsService,
+      private router: Router
     ){}
 
     ngOnInit(): void {
@@ -95,5 +97,9 @@ export class ChairsComponent implements OnInit{
           }
         }
       });
+  }
+
+  goToDetail(id: string): void {
+    this.router.navigate(['/admin/catedras', id]);
   }
 }

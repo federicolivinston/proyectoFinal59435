@@ -39,6 +39,33 @@
           </mat-error>
         </mat-form-field>
         </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Direccion</mat-label>
+            <input formControlName="street" matInput type="text"/>
+            <mat-error>
+              @if(studentForm.get('street')?.hasError('required')) { Ingrese la direccion. }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Provincia</mat-label>
+            <input formControlName="province" matInput type="text"/>
+            <mat-error>
+              @if(studentForm.get('province')?.hasError('required')) { Ingrese la provincia. }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Telefono</mat-label>
+            <input formControlName="phone" matInput type="text"/>
+            <mat-error>
+              @if(studentForm.get('phone')?.hasError('required')) { Ingrese el telefono. }
+            </mat-error>
+          </mat-form-field>
+        </div>
     </div>    
     </form>
 </div>

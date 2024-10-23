@@ -4,6 +4,7 @@ import { Course } from '../../../core/models/courseModels';
 import { MatDialog } from '@angular/material/dialog';
 import { CoursesFormComponent } from './courses-form/courses-form.component';
 import { Observable, of } from 'rxjs';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
@@ -19,7 +20,8 @@ export class CoursesComponent implements OnInit{
 
   constructor(
     private dialog: MatDialog,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -95,5 +97,9 @@ export class CoursesComponent implements OnInit{
           }
         }
       });
+  }
+
+  goToDetail(id: string): void {
+    this.router.navigate(['/admin/cursos', id]);
   }
 }

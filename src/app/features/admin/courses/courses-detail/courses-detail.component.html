@@ -1,0 +1,14 @@
+<mat-card *ngIf="course" class="example-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>{{course.title}}</mat-card-title>
+        <button mat-button (click)="goBack()">Volver</button>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-list role="list">
+            <mat-list-item role="listitem">DNI: {{course.degree}}</mat-list-item>
+            <mat-list-item role="listitem">DNI: {{course.createdAt | date: 'dd/mm/yyyy'}}</mat-list-item>
+          </mat-list>
+    </mat-card-content>
+  </mat-card>

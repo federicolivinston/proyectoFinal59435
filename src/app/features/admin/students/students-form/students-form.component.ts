@@ -29,6 +29,9 @@ export class StudentsFormComponent {
       lastName: [null, [Validators.minLength(3), Validators.required]],
       email: [null, [Validators.email,Validators.required]],
       dni: [null, [dniValidator,Validators.required]],
+      street: [null, [Validators.required]],
+      province: [null, [Validators.required]],
+      phone: [null, [Validators.required]],
     });
     this.patchFormValue();
   }

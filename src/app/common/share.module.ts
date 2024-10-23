@@ -19,6 +19,7 @@ import { MatListModule, MatNavList } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatListModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCardModule
   ]})
 
 export class ShareModule { }
