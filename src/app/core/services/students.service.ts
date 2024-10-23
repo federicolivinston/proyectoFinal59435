@@ -38,7 +38,6 @@ export class StudentsService {
   }
 
   updateStudentById(id: string, update: Partial<Student>) {
-    console.log(update);
     STUDENTS_DDBB = STUDENTS_DDBB.map((student) =>
       student.idStudent === id ? { ...student, ...update } : student
     );

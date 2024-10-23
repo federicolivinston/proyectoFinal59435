@@ -30,7 +30,7 @@ export class CoursesService {
   }
 
   removeCourseById(id: string): Observable<Course[]> {
-    COURSES_DDBB = COURSES_DDBB.filter((user) => user.idCourse != id);
+    COURSES_DDBB = COURSES_DDBB.filter((course) => course.idCourse != id);
     return of(COURSES_DDBB).pipe(delay(1000));
   }
 

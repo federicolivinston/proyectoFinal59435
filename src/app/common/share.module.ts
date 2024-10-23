@@ -17,6 +17,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule, MatNavList } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]})
 
 export class ShareModule { }

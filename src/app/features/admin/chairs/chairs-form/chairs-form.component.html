@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>{{ data?.editingChair ? "Editar" : "Nueva" }} Catedra</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="chairForm">
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Curso</mat-label>
+            <mat-select formControlName="course">
+              <mat-option *ngFor="let course of courses$ | async" [value]="course['title']">
+                {{ course["title"] }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              @if(chairForm.get('course')?.hasError('required')) { Ingrese el curso. }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Profesor</mat-label>
+            <input formControlName="profesor" matInput type="text" />
+            <mat-error>
+              @if(chairForm.get('profesor')?.hasError('required')) { Ingrese un profesor valido. }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Comienzo</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="startDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>
+              @if(chairForm.get('startDate')?.hasError('required')) { Debe ingresar una fecha. }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+        <mat-form-field class="example-form-field w-100">
+          <mat-label>Vacantes</mat-label>
+          <input formControlName="vacants" matInput type="number"/>
+          <mat-error>
+            @if(chairForm.get('vacants')?.hasError('required')||chairForm.get('vacants')?.hasError('min')||chairForm.get('vacants')?.hasError('max')) { Ingrese las vacantes (1 a 100). }
+          </mat-error>
+        </mat-form-field>
+        </div>
+    </div>    
+    </form>
+</div>
+  
+  <div mat-dialog-actions>
+    <button mat-dialog-close mat-button>Cancelar</button>
+    <button (click)="onSave()" mat-button [disabled]="chairForm.invalid">Guardar</button>
+  </div>

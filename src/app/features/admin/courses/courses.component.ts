@@ -37,7 +37,6 @@ export class CoursesComponent implements OnInit{
         this.isLoading = false;
       },
       complete: () => {
-        console.log(this.courses$);
         this.isLoading = false;
       },
     });
@@ -68,8 +67,8 @@ export class CoursesComponent implements OnInit{
       .afterClosed()
       .subscribe({
         next: (result) => {
-          this.isLoading = true;
           if (!!result) {
+            this.isLoading = true;
             if (editingCourse) {
               this.coursesService.updateCourseById(editingCourse.idCourse, result).subscribe({
                 next: (courses) => {

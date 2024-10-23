@@ -40,8 +40,6 @@ export class AuthService {
     let isValid=false;
     const token = localStorage.getItem('token');
     const userId = token ? token.slice(14, 20) : '';
-    console.log(token);
-    console.log(userId);
     return this.usersService.getUserById(userId).pipe(
       switchMap((user: User | null) => {
         if (user) {

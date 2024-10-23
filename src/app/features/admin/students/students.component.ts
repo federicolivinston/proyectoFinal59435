@@ -67,8 +67,8 @@ export class StudentsComponent  implements OnInit{
       .afterClosed()
       .subscribe({
         next: (result) => {
-          this.isLoading = true;
           if (!!result) {
+            this.isLoading = true;
             if (editingStudent) {
               this.studentsService.updateStudentById(editingStudent.idStudent, result).subscribe({
                 next: (students) => {
