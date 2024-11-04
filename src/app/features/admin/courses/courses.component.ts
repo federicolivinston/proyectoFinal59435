@@ -20,7 +20,7 @@ export class CoursesComponent implements OnInit{
     { columnDef: 'degree', header: 'Grado', cell: (row: any) => row.degree },
   ];
   actionFunctions = [
-    { label: 'more_vert', function: (course: any) => this.goToDetail(course.id)},
+    { label: 'wysiwyg', function: (course: any) => this.goToDetail(course.id)},
     { label: 'edit', function: (course: Course) => this.openForm(course)},
     { label: 'delete', function: (course: any) => this.onDelete(course.id)} 
   ];

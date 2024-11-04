@@ -23,7 +23,7 @@ export class StudentsComponent  implements OnInit{
     { columnDef: 'province', header: 'Provincia', cell: (row: any) => row.province },
   ];
   actionFunctions = [
-    { label: 'more_vert', function: (student: any) => this.goToDetail(student.id)},
+    { label: 'wysiwyg', function: (student: any) => this.goToDetail(student.id)},
     { label: 'edit', function: (student: Student) => this.openForm(student)},
     { label: 'delete', function: (student: any) => this.onDelete(student.id)} 
   ];

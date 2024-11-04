@@ -23,7 +23,7 @@ export class ChairsComponent implements OnInit{
     { columnDef: 'vacants', header: 'Vacantes', cell: (row: any) => row.vacants },
   ];
   actionFunctions = [
-    { label: 'more_vert', function: (chair: any) => this.goToDetail(chair.id)},
+    { label: 'wysiwyg', function: (chair: any) => this.goToDetail(chair.id)},
     { label: 'edit', function: (chair: Chair) => this.openForm(chair)},
     { label: 'delete', function: (chair: any) => this.onDelete(chair.id)} 
   ];
