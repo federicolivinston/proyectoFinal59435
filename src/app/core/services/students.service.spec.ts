@@ -83,32 +83,25 @@ describe('StudentsService', () => {
         { id: '2', firstName: 'Jane', lastName: 'Doe', email: 'email2@test.com', dni: 34567894, street: 'belgrano 1', idProvince: '2', phone: '5555-6667', createdAt: new Date() },
     ];
 
-    // Simular la respuesta de getStudents para devolver la lista de estudiantes
     spyOn(service, 'getStudents').and.returnValue(of(mockStudents));
 
-    // Llamar al método para eliminar al estudiante
     service.removeStudentById('1').subscribe((students) => {
-        expect(students.length).toBe(1); // Verificar que quede solo un estudiante
-        expect(students[0].firstName).toBe('Jane'); // Asegurarse de que sea Jane
+        expect(students.length).toBe(1); 
+        expect(students[0].firstName).toBe('Jane'); 
     });
 
-    // Esperar la solicitud DELETE
     const reqDelete = httpMock.expectOne(`${environment.apiBaseUrl}/${environment.studentsEndPoint}/1`);
-    expect(reqDelete.request.method).toBe('DELETE'); // Asegurarse de que el método sea DELETE
-    reqDelete.flush({}); // Simular respuesta exitosa de la eliminación
+    expect(reqDelete.request.method).toBe('DELETE'); 
+    reqDelete.flush({});
 
-    // Simular la respuesta de getStudents después de la eliminación
     const remainingStudents = mockStudents.filter(student => student.id !== '1');
-    // Ahora, forzar a getStudents a devolver solo los estudiantes restantes
     (service.getStudents as jasmine.Spy).and.returnValue(of(remainingStudents));
 
-    // Llamar de nuevo a getStudents para verificar que ahora solo haya un estudiante
     service.getStudents().subscribe((students) => {
         expect(students.length).toBe(1);
         expect(students[0].firstName).toBe('Jane');
     });
 
-    // Verificación de solicitudes abiertas
     httpMock.verify();
   });
 
