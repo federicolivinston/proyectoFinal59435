@@ -1,60 +1,69 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/userModels';
-import { BehaviorSubject, delay, Observable, of } from 'rxjs';
-
-let USERS_DDBB: User[] = [
-  {idUser: 'WRUJBZ', firstName: 'Federico', lastName:'Livingston', userName: 'flivingston', password: 'admin', profile: 'admin',createdAt: new Date()},
-  {idUser: 'WRUJKY', firstName: 'Fernando', lastName:'Lopez', userName: 'flopez', password: 'operator', profile: 'operator',createdAt: new Date()},
-];
+import { Profile, User } from '../models/userModels';
+import { BehaviorSubject, concatMap, delay, map, Observable, of, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { generateRandomString } from '../../common/utils/utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
+  private baseURL = environment.apiBaseUrl;
+  private baseEndPoint = environment.usersEndPoint;
+  private profileEndPoint = environment.profilesEndPoint;
+
+  constructor(private httpClient: HttpClient) {}
   
   getUsers(): Observable<User[]> {
-    return new Observable((observer) => {
-      setInterval(() => {
-        observer.next(USERS_DDBB);
-        observer.complete();
-      }, 3000);
-    });
+    return this.httpClient.get<User[]>(`${this.baseURL}/${this.baseEndPoint}`);
   } 
 
-  getUserById(id:string): Observable<User> {
-    return new Observable((observer) => {
-      setInterval(() => {
-        observer.next(USERS_DDBB.find((user)=>user.idUser==id));
-        observer.complete();
-      }, 3000);
-    });
-  }
-
-  getUserByUsernamePass(username:string, pass:string): Observable<User> {
-    return new Observable((observer) => {
-      setInterval(() => {
-        observer.next(USERS_DDBB.find((user)=>user.userName==username && user.password == pass));
-        observer.complete();
-      }, 3000);
-    });
-  }
-
-  removeStudentById(id: string): Observable<User[]> {
-    USERS_DDBB = USERS_DDBB.filter((user) => user.idUser != id);
-    return of(USERS_DDBB).pipe(delay(1000));
-  }
-
-  updateStudentById(id: string, update: Partial<User>) {
-    USERS_DDBB = USERS_DDBB.map((user) =>
-      user.idUser === id ? { ...user, ...update } : user
+  getUserById(id:string): Observable<User | null> {
+    return this.httpClient.get<User>(`${this.baseURL}/${this.baseEndPoint}/${id}`).pipe(
+      map((users)=>{
+        if (users) {
+          return users;
+        }else{
+          return null;
+        }
+      })
     );
+  }
 
-    return new Observable<User[]>((observer) => {
-      setInterval(() => {
-        observer.next(USERS_DDBB);
-        observer.complete();
-      }, 1000);
+  getUserByUsernamePass(username:string, password:string): Observable<User | null> {
+    return this.httpClient.get<User[]>(`${this.baseURL}/${this.baseEndPoint}/?userName=${username}&password=${password}`)
+    .pipe(
+      map((users)=>{
+        if (!!users[0]) {
+          return users[0];
+        }else{
+          return null;
+        }
+      })
+     ) ;
+  }
+
+  createUser(data: Omit<User, 'id'>): Observable<User> {
+    return this.httpClient.post<User>(`${this.baseURL}/${this.baseEndPoint}`, {
+      ...data,
+      createdAt: new Date().toISOString(),
     });
   }
 
+  removeUserById(id: string): Observable<User[]> {
+    return this.httpClient
+      .delete<User>(`${this.baseURL}/${this.baseEndPoint}/${id}`)
+      .pipe(concatMap(() => this.getUsers()));
+  }
+
+  updateUserById(id: string, update: Partial<User>) {
+    return this.httpClient
+      .patch<User>(`${this.baseURL}/${this.baseEndPoint}/${id}`, update)
+      .pipe(concatMap(() => this.getUsers()));
+  }
+
+  getProfiles(): Observable<Profile[]> {
+    return this.httpClient.get<Profile[]>(`${this.baseURL}/${this.profileEndPoint}`);
+  }
 }

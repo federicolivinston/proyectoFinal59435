@@ -1,14 +1,23 @@
+
 <mat-card *ngIf="course" class="example-card" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title-group>
-        <mat-card-title>{{course.title}}</mat-card-title>
-        <button mat-button (click)="goBack()">Volver</button>
-      </mat-card-title-group>
-    </mat-card-header>
-    <mat-card-content>
-        <mat-list role="list">
-            <mat-list-item role="listitem">DNI: {{course.degree}}</mat-list-item>
-            <mat-list-item role="listitem">DNI: {{course.createdAt | date: 'dd/mm/yyyy'}}</mat-list-item>
-          </mat-list>
-    </mat-card-content>
-  </mat-card>
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>{{course.title}}</mat-card-title>
+      <button mat-button (click)="goBack()">Volver</button>
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-content>
+      <mat-list class="mat-list">
+          <mat-list-item class="mat-list-item">Grado: {{course.degree}}</mat-list-item>
+          <mat-list-item class="mat-list-item">Fecha de creacion: {{course.createdAt | date: 'dd/mm/yyyy'}}</mat-list-item>
+        </mat-list>
+  </mat-card-content>
+</mat-card>
+<h1 appTitleFont>Catedras asociadas:</h1>
+<div class="mat-elevation-z8 tableContainer">    
+  @if (isLoadingChairs) {
+    <div class="spinnerContainer"><mat-spinner></mat-spinner></div>
+    } @else {
+      <app-common-table [columns]="displayedColumns" [data]="chairs$" [actions]="actionFunctions"></app-common-table>
+  }
+</div>

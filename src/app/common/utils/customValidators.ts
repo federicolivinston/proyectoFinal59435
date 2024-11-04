@@ -1,4 +1,4 @@
-import { ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidationErrors,ValidatorFn } from "@angular/forms";
 
 export const dniValidator: ValidatorFn = (control)=>{
 
@@ -7,3 +7,21 @@ export const dniValidator: ValidatorFn = (control)=>{
     }
     return null;
 }
+
+export function passwordValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        const value = control.value;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        const isValid = passwordPattern.test(value);
+        return isValid ? null : { passwordStrength: true };
+    };
+}
+
+export function usernameValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      const usernamePattern = /^[A-Za-z]+$/;
+      const isValid = value && value.length > 5 && usernamePattern.test(value);
+      return isValid ? null : { usernameInvalid: true };
+    };
+  }

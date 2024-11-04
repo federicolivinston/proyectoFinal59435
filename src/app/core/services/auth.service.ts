@@ -11,19 +11,21 @@ import { generateRandomString } from '../../common/utils/utils';
 export class AuthService {
 
   private _authUser$ = new BehaviorSubject<null | User>(null);
+  private profile:string = '';
   public authUser$ = this._authUser$.asObservable();
 
   constructor(private router: Router, private usersService: UsersService) {}
 
   login(userName: string, password:string): Observable<User> {
+    
     return this.usersService.getUserByUsernamePass(userName, password).pipe(
       switchMap((user: User | null) => {
         if (!user) {
           return throwError(() => new Error('Los datos son inválidos'));
         }
         this._authUser$.next(user);
-        const token=generateRandomString(14)+user.idUser+generateRandomString(11);
-        localStorage.setItem('token', token); // genero el token con el id del usuario
+        const token=generateRandomString(14)+user.id+generateRandomString(11);
+        localStorage.setItem('tokenFlivingston', token); // genero el token con el id del usuario
         return of(user);
       }),
       catchError((error) => throwError(() => error))
@@ -32,25 +34,42 @@ export class AuthService {
 
   logout() {
     this._authUser$.next(null);
-    localStorage.removeItem('token');
-    this.router.navigate(['auth', 'login']);
+    localStorage.removeItem('tokenFlivingston');
+    this.router.navigate(['']);
   }
 
-  verifyToken(): Observable<boolean> {
+  verifyToken(checkProfile:boolean, profile: string): Observable<boolean> {
     let isValid=false;
-    const token = localStorage.getItem('token');
-    const userId = token ? token.slice(14, 20) : '';
-    return this.usersService.getUserById(userId).pipe(
-      switchMap((user: User | null) => {
-        if (user) {
-          this._authUser$.next(user);
-          isValid=true;
-        }else{
-          this._authUser$.next(null);
-        }
-        return of(isValid);
-      }),
-      catchError((error) => throwError(() => error))
-    );
+    this.profile='';
+
+    const token = localStorage.getItem('tokenFlivingston');
+    const userId = token ? token.slice(14, token.length-11) : '';
+    if (userId.length > 0){
+      return this.usersService.getUserById(userId).pipe(
+        switchMap((user: User | null) => {
+          if (user) {
+            
+            if (!checkProfile || user["profile"]==profile)
+              {
+                this._authUser$.next(user);
+                this.profile=user["profile"];
+                isValid=true;
+              }else{
+                isValid=false;
+              }            
+          }else{
+            this._authUser$.next(null);
+          }
+          return of(isValid);
+        }),
+        catchError((error) => throwError(() => error))
+      );
+    } else{
+      return of(isValid);
+    }
+  }
+
+  getProfile():string {
+    return this.profile;
   }
 }

@@ -1,48 +1,52 @@
 import { Injectable } from '@angular/core';
 import { Course } from '../models/courseModels';
-import { delay, Observable, of } from 'rxjs';
+import { concatMap, delay, map, Observable, of } from 'rxjs';
 import { generateRandomString } from '../../common/utils/utils';
-
-let COURSES_DDBB: Course[] = [
-  {idCourse: 'WRUJBZ', title: 'Oratoria', degree:'Universitario', createdAt: new Date()},
-  {idCourse: 'KQVRDJ', title: 'Comunity Manager', degree:'Universitario', createdAt: new Date()},
-  {idCourse: 'MDPTLR', title: 'Asistente Contable', degree:'Terciario', createdAt: new Date()},
-  {idCourse: 'ATWDAG', title: 'Analista de RRHH', degree:'Universitario', createdAt: new Date()},
-  {idCourse: 'USKTVL', title: 'Excel', degree:'Terciario', createdAt: new Date()},
-  {idCourse: 'TVXKQU', title: 'Frances', degree:'Postgrado', createdAt: new Date()},
-  {idCourse: 'LPQMXA', title: 'Marketing de Contenidos', degree:'Postgrado', createdAt: new Date()},
-];
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
+  
+  private baseURL = environment.apiBaseUrl;
+  private baseEndPoint = environment.coursesEndPoint;
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) {}
 
   getCourses(): Observable<Course[]> {
-    return of(COURSES_DDBB).pipe(delay(1000));
+    return this.httpClient.get<Course[]>(`${this.baseURL}/${this.baseEndPoint}`);
   }
 
-  getCourseById(id: string): Observable<Course | null> {
-    let course = COURSES_DDBB.find((course) => course.idCourse == id) || null;
-    return of(course).pipe(delay(1000));
+  getCourseById(id:string): Observable<Course | null> {
+    return this.httpClient.get<Course>(`${this.baseURL}/${this.baseEndPoint}/${id}`).pipe(
+      map((courses)=>{
+        if (courses) {
+          return courses;
+        }else{
+          return null;
+        }
+      })
+    );
   }
 
-  createCourse(data: Omit<Course, 'idCourse'>): Observable<Course[]> {
-    COURSES_DDBB.push({ ...data, idCourse: generateRandomString(6) });
-    return this.getCourses();
+  createCourse(data: Omit<Course, 'id'>): Observable<Course> {
+    return this.httpClient.post<Course>(`${this.baseURL}/${this.baseEndPoint}`, {
+      ...data,
+      createdAt: new Date().toISOString(),
+    });
   }
 
   removeCourseById(id: string): Observable<Course[]> {
-    COURSES_DDBB = COURSES_DDBB.filter((course) => course.idCourse != id);
-    return of(COURSES_DDBB).pipe(delay(1000));
+    return this.httpClient
+      .delete<Course>(`${this.baseURL}/${this.baseEndPoint}/${id}`)
+      .pipe(concatMap(() => this.getCourses()));
   }
 
   updateCourseById(id: string, update: Partial<Course>) {
-    COURSES_DDBB = COURSES_DDBB.map((course) =>
-      course.idCourse === id ? { ...course, ...update } : course
-    );
-    return of(COURSES_DDBB).pipe(delay(1000));
+    return this.httpClient
+      .patch<Course>(`${this.baseURL}/${this.baseEndPoint}/${id}`, update)
+      .pipe(concatMap(() => this.getCourses()));
   }
 }

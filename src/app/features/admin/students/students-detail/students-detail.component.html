@@ -1,4 +1,4 @@
-<mat-card *ngIf="student" class="example-card" appearance="outlined">
+  <mat-card *ngIf="student" class="example-card" appearance="outlined">
     <mat-card-header>
       <mat-card-title-group>
         <mat-card-title>{{student | userFullName}}</mat-card-title>
@@ -6,12 +6,26 @@
       </mat-card-title-group>
     </mat-card-header>
     <mat-card-content>
-        <mat-list role="list">
-            <mat-list-item role="listitem">DNI: {{student.dni}}</mat-list-item>
-            <mat-list-item role="listitem">Email: {{student.email}}</mat-list-item>
-            <mat-list-item role="listitem">Driccion: {{student.street}}</mat-list-item>
-            <mat-list-item role="listitem">Provincia: {{student.province}}</mat-list-item>
-            <mat-list-item role="listitem">Telefono: {{student.phone}}</mat-list-item>
-          </mat-list>
+        <mat-list class="mat-list">
+          <mat-list-item class="mat-list-item">DNI: {{student.dni}}</mat-list-item>
+          <mat-list-item class="mat-list-item">Email: {{student.email}}</mat-list-item>
+          <mat-list-item class="mat-list-item">Direccion: {{student.street}}</mat-list-item>
+          <mat-list-item class="mat-list-item">Provincia: {{student.province}}</mat-list-item>
+          <mat-list-item class="mat-list-item">Telefono: {{student.phone}}</mat-list-item>
+        </mat-list>
     </mat-card-content>
   </mat-card>
+  <h1 appTitleFont>Inscripciones:</h1>
+  <button mat-stroked-button (click)="openForm('student')">
+    <mat-icon>
+        add
+    </mat-icon>
+    Nueva Inscripcion
+  </button>
+  <div class="mat-elevation-z8 tableContainer">    
+    @if (isLoadingInscriptions) {
+      <div class="spinnerContainer"><mat-spinner></mat-spinner></div>
+      } @else {
+        <app-common-table [columns]="displayedColumns" [data]="chairs$" [actions]="actionFunctions"></app-common-table>
+    }
+  </div>

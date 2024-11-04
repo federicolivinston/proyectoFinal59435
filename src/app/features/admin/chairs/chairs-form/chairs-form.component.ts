@@ -30,7 +30,7 @@ export class ChairsFormComponent {
     this.courses$ = this.coursesService.getCourses();
 
     this.chairForm = this.formBuilder.group({
-      course: [null, [Validators.required]],
+      idCourse: [null, [Validators.required]],
       profesor: [null, [Validators.minLength(3), Validators.required]],
       startDate: [null, [Validators.required]],
       vacants: [1, [Validators.required, Validators.min(1), Validators.max(100)]],
@@ -55,7 +55,7 @@ export class ChairsFormComponent {
       this.matDialogRef.close({
         ...this.chairForm.value,
         idChair: this.isEditing
-          ? this.data!.editingChair!.idChair
+          ? this.data!.editingChair!.id
           : generateRandomString(6),
         createdAt: this.isEditing
           ? this.data!.editingChair!.createdAt

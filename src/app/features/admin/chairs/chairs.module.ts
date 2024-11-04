@@ -6,7 +6,7 @@ import { ShareModule } from '../../../common/share.module';
 import { ChairsComponent } from './chairs.component';
 import { ChairsFormComponent } from './chairs-form/chairs-form.component';
 import { ChairsDetailComponent } from './chairs-detail/chairs-detail.component';
-
+import { AdminModule } from '../admin.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,8 @@ import { ChairsDetailComponent } from './chairs-detail/chairs-detail.component';
   imports: [
     CommonModule,
     ChairsRoutingModule,
-    ShareModule
+    ShareModule,
+    AdminModule
   ]
 })
 export class ChairsModule { }

@@ -47,7 +47,7 @@ export class CoursesFormComponent {
       this.matDialogRef.close({
         ...this.courseForm.value,
         idStudent: this.isEditing
-          ? this.data!.editingCourse!.idCourse
+          ? this.data!.editingCourse!.id
           : generateRandomString(5),
         createdAt: this.isEditing
           ? this.data!.editingCourse!.createdAt

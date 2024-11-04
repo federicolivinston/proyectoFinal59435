@@ -6,13 +6,13 @@
         <div class="col-6">
           <mat-form-field class="example-form-field w-100">
             <mat-label>Curso</mat-label>
-            <mat-select formControlName="course">
-              <mat-option *ngFor="let course of courses$ | async" [value]="course['title']">
+            <mat-select formControlName="idCourse">
+              <mat-option *ngFor="let course of courses$ | async" [value]="course['id']">
                 {{ course["title"] }}
               </mat-option>
             </mat-select>
             <mat-error>
-              @if(chairForm.get('course')?.hasError('required')) { Ingrese el curso. }
+              @if(chairForm.get('idCourse')?.hasError('required')) { Ingrese el curso. }
             </mat-error>
           </mat-form-field>
         </div>

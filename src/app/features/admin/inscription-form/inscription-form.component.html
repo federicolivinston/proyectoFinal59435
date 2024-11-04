@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Nueva Inscripcion</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="inscriptionForm">
+        <div class="row">
+            <div class="col-12">
+            <mat-form-field class="example-form-field" style="width: 400px;">
+                <mat-label>Agregar</mat-label>
+                <mat-select formControlName="idData">
+                <mat-option *ngFor="let data of data$ | async" [value]="data['id']">
+                    {{ 
+                        tipo === 'chair' 
+                          ? (data["dni"] + ' - ' + (data | userFullName:true)) 
+                          : tipo === 'student' 
+                            ? (data["course"] + ' - ' + data["profesor"] + ' - ' + (data["startDate"] | date:'dd/MM/yyyy')) 
+                            : '' 
+                    }}
+                </mat-option>
+                </mat-select>
+                <mat-error>
+                @if(inscriptionForm.get('idData')?.hasError('required')) { Ingrese el curso. }
+                </mat-error>
+            </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>
+  
+  <div mat-dialog-actions>
+    <button mat-dialog-close mat-button>Cancelar</button>
+    <button (click)="onSave()" mat-button [disabled]="inscriptionForm.invalid">Guardar</button>
+  </div>

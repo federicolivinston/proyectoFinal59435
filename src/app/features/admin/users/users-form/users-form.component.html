@@ -1,0 +1,62 @@
+<h1 mat-dialog-title>{{ data?.editingUser ? "Editar" : "Nuevo" }} Alumno</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="userForm">
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field class="example-form-field w-100">
+                    <mat-label>Usuario</mat-label>
+                    <input formControlName="userName" matInput type="text" />
+                    <mat-error>
+                    @if(userForm.get('userName')?.invalid) {Solo letras y al menos 6.}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="example-form-field w-100">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="firstName" matInput type="text" />
+                    <mat-error>
+                    @if(userForm.get('firstName')?.invalid) { Ingrese un nombre valido. }
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="example-form-field w-100">
+                    <mat-label>Apellido</mat-label>
+                    <input formControlName="lastName" matInput type="text" />
+                    <mat-error>
+                    @if(userForm.get('lastName')?.invalid) { Ingrese un Apellido valido. }
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="example-form-field w-100">
+                    <mat-label>Contraseña</mat-label>
+                    <input formControlName="password" matInput type="text" />
+                    <mat-error>
+                    @if(userForm.get('password')?.invalid) { Debe ingresar 8 caracteres, al menos una mayuscula una minuscula y un numero. }
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field class="example-form-field w-100">
+                  <mat-label>Perfil</mat-label>
+                  <mat-select formControlName="profile">
+                    <mat-option *ngFor="let profile of profiles$ | async" [value]="profile['id']">
+                      {{ profile["name"] }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    @if(userForm.get('profile')?.hasError('required')) { Ingrese el perfil. }
+                  </mat-error>
+                </mat-form-field>
+            </div>
+        </div>    
+    </form>
+</div>
+  
+  <div mat-dialog-actions>
+    <button mat-dialog-close mat-button>Cancelar</button>
+    <button (click)="onSave()" mat-button [disabled]="userForm.invalid">Guardar</button>
+  </div>

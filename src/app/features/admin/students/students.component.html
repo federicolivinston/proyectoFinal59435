@@ -10,50 +10,6 @@
 @if (isLoading) {
   <div class="spinnerContainer"><mat-spinner></mat-spinner></div>
   } @else {  
-  <table mat-table [dataSource]="students$" class="mat-elevation-z8 rounded-table">
-    
-      <!-- Position Column -->
-      <ng-container matColumnDef="idStudent">
-        <th appTitleFont mat-header-cell *matHeaderCellDef> ID </th>
-        <td mat-cell *matCellDef="let student"> {{student.idStudent}} </td>
-      </ng-container>
-    
-      <!-- Name Column -->
-      <ng-container matColumnDef="fullName">
-        <th appTitleFont mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let student"> {{student | userFullName:true }} </td>
-      </ng-container>
-    
-      <!-- Weight Column -->
-      <ng-container matColumnDef="email">
-        <th appTitleFont mat-header-cell *matHeaderCellDef> E-mail </th>
-        <td mat-cell *matCellDef="let student"> {{student.email}} </td>
-      </ng-container>
-    
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="dni">
-        <th appTitleFont mat-header-cell *matHeaderCellDef> DNI </th>
-        <td mat-cell *matCellDef="let student"> {{student.dni}} </td>
-      </ng-container>
-    
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="actions">
-          <th appTitleFont mat-header-cell *matHeaderCellDef> Acciones </th>
-          <td mat-cell *matCellDef="let student">
-            <button (click)="goToDetail(student.idStudent)" mat-icon-button>
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <button (click)="openForm(student)" mat-icon-button>
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button (click)="onDelete(student.idStudent)" mat-icon-button>
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-      </ng-container>
-    
-      <tr appTitleFont mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+  <app-common-table [columns]="displayedColumns" [data]="students$" [actions]="actionFunctions"></app-common-table>
   }
 </div>

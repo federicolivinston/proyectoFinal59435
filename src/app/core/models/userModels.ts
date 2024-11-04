@@ -1,9 +1,16 @@
 import { Person } from "./personModels";
 
 export interface User extends Person{
-    idUser: string;
+    id: string;
     userName: string;
+    firstName: string;
+    lastName: string;
     password: string;
     profile: string;
     createdAt: Date;
   }
+
+export interface Profile {
+  id: string,
+  name: string
+}

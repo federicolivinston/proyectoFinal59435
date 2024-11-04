@@ -1,0 +1,32 @@
+/* Structure */
+table {
+    width: 90%;
+  }
+  
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 300px;
+}
+
+.spacer{
+  width: 30px;
+}
+
+.tableContainer{
+  margin-top: 20px;
+  border-radius: 20px;
+  margin-bottom: 20px; 
+}
+
+.spinnerContainer{
+  width:100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.rounded-table {
+  border-radius: 20px;
+  overflow: hidden;
+}

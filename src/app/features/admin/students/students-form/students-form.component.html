@@ -17,7 +17,7 @@
             <mat-label>Apellido</mat-label>
             <input formControlName="lastName" matInput type="text" />
             <mat-error>
-              @if(studentForm.get('lastName')?.hasError('required')) { Ingrese un apellido valido. }
+              @if(studentForm.get('lastName')?.invalid) { Ingrese un apellido valido. }
             </mat-error>
           </mat-form-field>
         </div>
@@ -51,9 +51,13 @@
         <div class="col-6">
           <mat-form-field class="example-form-field w-100">
             <mat-label>Provincia</mat-label>
-            <input formControlName="province" matInput type="text"/>
+            <mat-select formControlName="idProvince">
+              <mat-option *ngFor="let province of provinces$ | async" [value]="province['id']">
+                {{ province["name"] }}
+              </mat-option>
+            </mat-select>
             <mat-error>
-              @if(studentForm.get('province')?.hasError('required')) { Ingrese la provincia. }
+              @if(studentForm.get('idProvince')?.hasError('required')) { Ingrese la provincia. }
             </mat-error>
           </mat-form-field>
         </div>

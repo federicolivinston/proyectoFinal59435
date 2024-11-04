@@ -6,7 +6,7 @@ import { CoursesComponent } from './courses.component';
 import { ShareModule } from '../../../common/share.module';
 import { CoursesFormComponent } from './courses-form/courses-form.component';
 import { CoursesDetailComponent } from './courses-detail/courses-detail.component';
-
+import { AdminModule } from '../admin.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,8 @@ import { CoursesDetailComponent } from './courses-detail/courses-detail.componen
   imports: [
     CommonModule,
     CoursesRoutingModule,
-    ShareModule
+    ShareModule,
+    AdminModule
   ],
   exports:[CoursesComponent]
 })

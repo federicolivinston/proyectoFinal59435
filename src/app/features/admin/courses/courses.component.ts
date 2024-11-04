@@ -4,7 +4,7 @@ import { Course } from '../../../core/models/courseModels';
 import { MatDialog } from '@angular/material/dialog';
 import { CoursesFormComponent } from './courses-form/courses-form.component';
 import { Observable, of } from 'rxjs';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
@@ -14,7 +14,16 @@ import { Route, Router } from '@angular/router';
 export class CoursesComponent implements OnInit{
 
   courses$: Observable<Course[]> = of([]);
-  displayedColumns: string[] = ['idCourse', 'title', 'degree', 'actions'];
+  displayedColumns = [
+    { columnDef: 'id', header: 'ID', cell: (row: any) => row.id },
+    { columnDef: 'title', header: 'Nombre del Curso', cell: (row: any) => row.title },
+    { columnDef: 'degree', header: 'Grado', cell: (row: any) => row.degree },
+  ];
+  actionFunctions = [
+    { label: 'more_vert', function: (course: any) => this.goToDetail(course.id)},
+    { label: 'edit', function: (course: Course) => this.openForm(course)},
+    { label: 'delete', function: (course: any) => this.onDelete(course.id)} 
+  ];
 
   isLoading = false;
 
@@ -72,7 +81,7 @@ export class CoursesComponent implements OnInit{
           if (!!result) {
             this.isLoading = true;
             if (editingCourse) {
-              this.coursesService.updateCourseById(editingCourse.idCourse, result).subscribe({
+              this.coursesService.updateCourseById(editingCourse.id, result).subscribe({
                 next: (courses) => {
                 },
                 error: (err) => {

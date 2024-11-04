@@ -1,0 +1,409 @@
+{
+  "users": [
+    {
+      "id": "WRUJBZ",
+      "firstName": "Federico",
+      "lastName": "Livingston",
+      "userName": "flivingston",
+      "password": "admin",
+      "profile": "admin",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "WRUJKY",
+      "firstName": "Fernando",
+      "lastName": "Lopez",
+      "userName": "flopez",
+      "password": "Operator1",
+      "profile": "operator",
+      "createdAt": "2024-10-24T00:14:33.140Z",
+      "idStudent": "WRUJKY"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "admin",
+      "name": "Administrador"
+    },
+    {
+      "id": "operator",
+      "name": "Operador"
+    }
+  ],
+  "students": [
+    {
+      "id": "WRUJBZ",
+      "firstName": "Catalina",
+      "lastName": "Sánchez",
+      "email": "catalinasanchez@hotmail.com",
+      "dni": 37019227,
+      "street": "Paraguay 1850",
+      "idProvince": "COR",
+      "phone": "1148 15 2936",
+      "createdAt": "2024-10-24T00:14:33.140Z",
+      "idStudent": "WRUJBZ"
+    },
+    {
+      "id": "GNFUVQ",
+      "firstName": "Alejandro",
+      "lastName": "García",
+      "email": "alejandrogarcía@hotmail.com",
+      "dni": 41168001,
+      "street": "Republica De Italia 412",
+      "idProvince": "MEN",
+      "phone": "2614 30 8097",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "PBXQEW",
+      "firstName": "Sofía",
+      "lastName": "Rodríguez",
+      "email": "sofíarodriguez@hotmail.com",
+      "dni": 25230982,
+      "street": "Casilla De Correo 127",
+      "idProvince": "SFE",
+      "phone": "3436 42 2047",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "ENPYBP",
+      "firstName": "Miguel",
+      "lastName": "López",
+      "email": "miguellopez@hotmail.com",
+      "dni": 24270537,
+      "street": "Lima 2118",
+      "idProvince": "SFE",
+      "phone": "3414 32 2110",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "CNLEMX",
+      "firstName": "Isabella",
+      "lastName": "González",
+      "email": "isabellagonzález@hotmail.com",
+      "dni": 32166633,
+      "street": "Monte Caseros 452",
+      "idProvince": "BSA",
+      "phone": "(0343) 431-7951",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "ZYLNFN",
+      "firstName": "David",
+      "lastName": "Pérez",
+      "email": "davidperez@hotmail.com",
+      "dni": 37685490,
+      "street": "Entre Rios 461 Piso B Dpto 2",
+      "idProvince": "BSA",
+      "phone": "114659 9665",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "WAETFW",
+      "firstName": "Valentina",
+      "lastName": "Martínez",
+      "email": "valentinamartínez@hotmail.com",
+      "dni": 38545732,
+      "street": "Belgrano 4736 Piso 1 Depto. A",
+      "idProvince": "BSA",
+      "phone": "1147 59 5542",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "RJTCAE",
+      "firstName": "Diego",
+      "lastName": "Ramírez",
+      "email": "diegoramirez@hotmail.com",
+      "dni": 46678544,
+      "street": "135 1684",
+      "idProvince": "BSA",
+      "phone": "2214 53 0990",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "MLJDSA",
+      "firstName": "Emilia",
+      "lastName": "Torres",
+      "email": "emiliatorres@hotmail.com",
+      "dni": 32800784,
+      "street": "Avenida Pio Xii 1726",
+      "idProvince": "CRR",
+      "phone": "378342 6520",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "BLAAPQ",
+      "firstName": "Mateo v",
+      "lastName": "Hernandez",
+      "email": "mateohernandez@hotmail.com",
+      "dni": 39912295,
+      "street": "Av Belgrano 1152",
+      "idProvince": "MEN",
+      "phone": "3492 43 2180",
+      "createdAt": "2024-10-24T00:14:33.140Z",
+      "idStudent": "BLAAPQ"
+    }
+  ],
+  "courses": [
+    {
+      "id": "WRUJBZ",
+      "title": "Oratoria",
+      "degree": "Universitario",
+      "createdAt": "2024-10-24T00:14:33.140Z",
+      "idStudent": "WRUJBZ"
+    },
+    {
+      "id": "KQVRDJ",
+      "title": "Comunity Manager",
+      "degree": "Universitario",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "MDPTLR",
+      "title": "Asistente Contable",
+      "degree": "Terciario",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "ATWDAG",
+      "title": "Analista de RRHH",
+      "degree": "Universitario",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "USKTVL",
+      "title": "Excel",
+      "degree": "Terciario",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "TVXKQU",
+      "title": "Frances",
+      "degree": "Postgrado",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "LPQMXA",
+      "title": "Marketing de Contenidos",
+      "degree": "Postgrado",
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    }
+  ],
+  "chairs": [
+    {
+      "id": "WRUJBZ",
+      "idCourse": "WRUJBZ",
+      "profesor": "Ernesto Sánchez n",
+      "startDate": "2024-10-24T00:14:33.140Z",
+      "vacants": 20,
+      "createdAt": "2024-10-24T00:14:33.140Z",
+      "idChair": "WRUJBZ"
+    },
+    {
+      "id": "GNFUVQ",
+      "idCourse": "MDPTLR",
+      "profesor": "Julio Lopez",
+      "startDate": "2024-10-20T00:14:33.140Z",
+      "vacants": 30,
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    },
+    {
+      "id": "PBXQEW",
+      "idCourse": "USKTVL",
+      "profesor": "Martin Suarez",
+      "startDate": "2024-10-16T00:14:33.140Z",
+      "vacants": 30,
+      "createdAt": "2024-10-24T00:14:33.140Z"
+    }
+  ],
+  "inscriptions": [
+    {
+      "id": "aaaa",
+      "idChair": "WRUJBZ",
+      "idStudent": "WRUJBZ"
+    },
+    {
+      "id": "084f",
+      "idChair": "WRUJBZ",
+      "idStudent": "GNFUVQ"
+    },
+    {
+      "id": "b485",
+      "idChair": "WRUJBZ",
+      "idStudent": "GNFUVQ"
+    },
+    {
+      "id": "51f3",
+      "idChair": "WRUJBZ",
+      "idStudent": "GNFUVQ"
+    },
+    {
+      "id": "52f8",
+      "idChair": "WRUJBZ",
+      "idStudent": "WRUJBZ"
+    },
+    {
+      "id": "90ba",
+      "idChair": "WRUJBZ",
+      "idStudent": "WRUJBZ"
+    },
+    {
+      "id": "be79",
+      "idChair": "WRUJBZ",
+      "idStudent": "GNFUVQ"
+    },
+    {
+      "id": "fde7",
+      "idChair": "GNFUVQ",
+      "idStudent": "WRUJBZ"
+    },
+    {
+      "id": "232e",
+      "idChair": "WRUJBZ",
+      "idStudent": "PBXQEW"
+    },
+    {
+      "id": "5ac0",
+      "idChair": "GNFUVQ",
+      "idStudent": "PBXQEW"
+    },
+    {
+      "id": "71e5",
+      "idChair": "GNFUVQ",
+      "idStudent": "GNFUVQ"
+    },
+    {
+      "id": "dfb5",
+      "idChair": "PBXQEW",
+      "idStudent": "GNFUVQ"
+    },
+    {
+      "id": "ca0c",
+      "idChair": "PBXQEW",
+      "idStudent": "PBXQEW"
+    },
+    {
+      "id": "061c",
+      "idChair": "PBXQEW",
+      "idStudent": "ENPYBP"
+    },
+    {
+      "id": "387e",
+      "idChair": "WRUJBZ",
+      "idStudent": "PBXQEW"
+    },
+    {
+      "id": "51a4",
+      "idChair": "WRUJBZ",
+      "idStudent": "CNLEMX"
+    },
+    {
+      "id": "78b8",
+      "idChair": "GNFUVQ",
+      "idStudent": "WRUJBZ"
+    },
+    {
+      "id": "ce2c",
+      "idChair": "PBXQEW",
+      "idStudent": "WRUJBZ"
+    }
+  ],
+  "provinces": [
+    {
+      "id": "CAB",
+      "name": "Capital Federal"
+    },
+    {
+      "id": "BSA",
+      "name": "Buenos Aires"
+    },
+    {
+      "id": "CAT",
+      "name": "Catamarca"
+    },
+    {
+      "id": "COR",
+      "name": "Córdoba"
+    },
+    {
+      "id": "CRR",
+      "name": "Corrientes"
+    },
+    {
+      "id": "CHA",
+      "name": "Chaco"
+    },
+    {
+      "id": "CHU",
+      "name": "Chubut"
+    },
+    {
+      "id": "ENT",
+      "name": "Entre Ríos"
+    },
+    {
+      "id": "FOR",
+      "name": "Formosa"
+    },
+    {
+      "id": "JUJ",
+      "name": "Jujuy"
+    },
+    {
+      "id": "PAM",
+      "name": "La Pampa"
+    },
+    {
+      "id": "RIO",
+      "name": "La Rioja"
+    },
+    {
+      "id": "MEN",
+      "name": "Mendoza"
+    },
+    {
+      "id": "MIS",
+      "name": "Misiones"
+    },
+    {
+      "id": "NEU",
+      "name": "Neuquén"
+    },
+    {
+      "id": "RNE",
+      "name": "Río Negro"
+    },
+    {
+      "id": "SAL",
+      "name": "Salta"
+    },
+    {
+      "id": "SJU",
+      "name": "San Juan"
+    },
+    {
+      "id": "SLU",
+      "name": "San Luis"
+    },
+    {
+      "id": "SCR",
+      "name": "Santa Cruz"
+    },
+    {
+      "id": "SFE",
+      "name": "Santa Fe"
+    },
+    {
+      "id": "SDE",
+      "name": "Santiago del Estero"
+    },
+    {
+      "id": "TDF",
+      "name": "Tierra del Fuego"
+    },
+    {
+      "id": "TUC",
+      "name": "Tucumán"
+    }
+  ]
+}

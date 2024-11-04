@@ -18,6 +18,10 @@ const routes: Routes = [
     path: 'catedras',
     loadChildren: () => import('./chairs/chairs.module').then((m) => m.ChairsModule),
   },
+  {
+    path: 'usuarios',
+    loadChildren: () => import('./users/users.module').then((m) => m.UsersModule),
+  },
 ];
 
 @NgModule({

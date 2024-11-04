@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChairsService } from '../../../core/services/chairs.service';
 import { ChairsFormComponent } from './chairs-form/chairs-form.component';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-chairs',
@@ -14,7 +15,18 @@ import { Router } from '@angular/router';
 
 export class ChairsComponent implements OnInit{
   chairs$: Observable<Chair[]> = of([]);
-  displayedColumns: string[] = ['idChair', 'course', 'profesor', 'startDate', 'vacants', 'actions'];
+  displayedColumns = [
+    { columnDef: 'id', header: 'ID', cell: (row: any) => row.id },
+    { columnDef: 'course', header: 'Nombre del Curso', cell: (row: any) => row.course },
+    { columnDef: 'profesor', header: 'Profesor', cell: (row: any) => row.profesor },
+    { columnDef: 'starDate', header: 'Comienzo', cell: (row: any) => row.startDate, pipe: new DatePipe('en-US'), pipeFormat: 'dd/MM/yyyy' },
+    { columnDef: 'vacants', header: 'Vacantes', cell: (row: any) => row.vacants },
+  ];
+  actionFunctions = [
+    { label: 'more_vert', function: (chair: any) => this.goToDetail(chair.id)},
+    { label: 'edit', function: (chair: Chair) => this.openForm(chair)},
+    { label: 'delete', function: (chair: any) => this.onDelete(chair.id)} 
+  ];
 
   isLoading = false;
 
@@ -72,7 +84,7 @@ export class ChairsComponent implements OnInit{
           if (!!result) {
             this.isLoading = true;
             if (editingChair) {
-              this.chairsService.updateChairById(editingChair.idChair, result).subscribe({
+              this.chairsService.updateChairById(editingChair.id, result).subscribe({
                 next: (chairs) => {
                 },
                 error: (err) => {

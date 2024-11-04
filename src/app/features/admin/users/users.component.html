@@ -1,0 +1,15 @@
+<h1>Administrar Usuarios</h1>
+
+<button mat-stroked-button (click)="openForm()">
+    <mat-icon>
+        add
+    </mat-icon>
+    Nuevo Usuario
+</button>
+<div class="mat-elevation-z8 tableContainer">
+@if (isLoading) {
+  <div class="spinnerContainer"><mat-spinner></mat-spinner></div>
+  } @else {  
+  <app-common-table [columns]="displayedColumns" [data]="users$" [actions]="actionFunctions"></app-common-table>
+  }
+</div>

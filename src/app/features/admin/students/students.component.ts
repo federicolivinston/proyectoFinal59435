@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentsFormComponent } from './students-form/students-form.component';
 import { StudentsService } from '../../../core/services/students.service';
-import { Student } from '../../../core/models/studentModels';
+import { Student, StudentDetail } from '../../../core/models/studentModels';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { UserFullNamePipe } from '../../../common/pipes/user-full-name.pipe';
 
 @Component({
   selector: 'app-students',
@@ -13,8 +14,19 @@ import { Router } from '@angular/router';
 })
 
 export class StudentsComponent  implements OnInit{
-  students$: Observable<Student[]> = of([]);
-  displayedColumns: string[] = ['idStudent', 'fullName', 'email', 'dni', 'actions'];
+  students$: Observable<StudentDetail[]> = of([]);
+  displayedColumns = [
+    { columnDef: 'id', header: 'ID', cell: (row: any) => row.id },
+    { columnDef: 'fullName', header: 'Nombre', cell: (row: any) => row, pipe: new UserFullNamePipe(), },
+    { columnDef: 'email', header: 'Email', cell: (row: any) => row.email },
+    { columnDef: 'dni', header: 'DNI', cell: (row: any) => row.dni },
+    { columnDef: 'province', header: 'Provincia', cell: (row: any) => row.province },
+  ];
+  actionFunctions = [
+    { label: 'more_vert', function: (student: any) => this.goToDetail(student.id)},
+    { label: 'edit', function: (student: Student) => this.openForm(student)},
+    { label: 'delete', function: (student: any) => this.onDelete(student.id)} 
+  ];
 
   isLoading = false;
 
@@ -72,7 +84,7 @@ export class StudentsComponent  implements OnInit{
           if (!!result) {
             this.isLoading = true;
             if (editingStudent) {
-              this.studentsService.updateStudentById(editingStudent.idStudent, result).subscribe({
+              this.studentsService.updateStudentById(editingStudent.id, result).subscribe({
                 next: (students) => {
                 },
                 error: (err) => {

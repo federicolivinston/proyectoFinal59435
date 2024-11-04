@@ -12,16 +12,22 @@ const routes: Routes = [
       import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
   {
+    path: 'auth',
+    component: AuthComponent,
+    loadChildren: () =>
+      import('./features/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
     path: 'admin',
     canActivate: [authGuard],
     component: AdminComponent,
     loadChildren: () =>
       import('./features/admin/admin.module').then((m) => m.AdminModule),
   },
-  /*{
+  {
     path: '**',
-    redirectTo: ''
-  }*/
+    redirectTo: '/admin'
+  }
 ];
 
 @NgModule({
