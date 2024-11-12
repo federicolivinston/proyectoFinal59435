@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CoursesFormComponent } from './courses-form/courses-form.component';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-courses',
@@ -14,6 +15,8 @@ import { Router } from '@angular/router';
 export class CoursesComponent implements OnInit{
 
   courses$: Observable<Course[]> = of([]);
+  profile$: Observable<string>;
+  
   displayedColumns = [
     { columnDef: 'id', header: 'ID', cell: (row: any) => row.id },
     { columnDef: 'title', header: 'Nombre del Curso', cell: (row: any) => row.title },
@@ -21,17 +24,19 @@ export class CoursesComponent implements OnInit{
   ];
   actionFunctions = [
     { label: 'wysiwyg', function: (course: any) => this.goToDetail(course.id)},
-    { label: 'edit', function: (course: Course) => this.openForm(course)},
-    { label: 'delete', function: (course: any) => this.onDelete(course.id)} 
   ];
 
+  actionsDisabled=true;
   isLoading = false;
 
   constructor(
+    private authService: AuthService,
     private dialog: MatDialog,
     private coursesService: CoursesService,
     private router: Router
-  ){}
+  ){
+    this.profile$ = this.authService.getProfile();
+  }
 
   ngOnInit(): void {
     this.loadCourses();
@@ -39,6 +44,16 @@ export class CoursesComponent implements OnInit{
 
   loadCourses():void{
     this.isLoading = true;
+    this.profile$.subscribe(profile => {
+      if (profile === 'admin') {
+        this.actionsDisabled = false;
+        this.actionFunctions = [
+          { label: 'wysiwyg', function: (course: any) => this.goToDetail(course.id) },
+          { label: 'edit', function: (course: Course) => this.openForm(course) },
+          { label: 'delete', function: (course: any) => this.onDelete(course.id) }
+        ];
+      }
+    });
     this.courses$ = this.coursesService.getCourses();
     this.courses$.subscribe({
       next: () => {

@@ -1,6 +1,6 @@
 <h1>Administrar Cursos</h1>
 
-<button mat-stroked-button (click)="openForm()">
+<button  *ngIf="!actionsDisabled" mat-flat-button color="primary" (click)="openForm()">
     <mat-icon>
         add
     </mat-icon>

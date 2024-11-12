@@ -4,43 +4,48 @@ import { User } from '../models/userModels';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
 import { generateRandomString } from '../../common/utils/utils';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '../../store/auth.actions';
+import { selectAutheticatedUser, selectUserProfile } from '../../store/auth.selectors';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  public authUser$: Observable <User | null>;
 
-  private _authUser$ = new BehaviorSubject<null | User>(null);
-  private profile:string = '';
-  public authUser$ = this._authUser$.asObservable();
-
-  constructor(private router: Router, private usersService: UsersService) {}
+  constructor(
+      private router: Router, 
+      private usersService: UsersService,
+      private store: Store
+    ) {
+      this.authUser$= this.store.select(selectAutheticatedUser );
+    }
 
   login(userName: string, password:string): Observable<User> {
     
     return this.usersService.getUserByUsernamePass(userName, password).pipe(
-      switchMap((user: User | null) => {
-        if (!user) {
+      switchMap((authUser: User | null) => {
+        if (!authUser) {
           return throwError(() => new Error('Los datos son inválidos'));
         }
-        this._authUser$.next(user);
-        const token=generateRandomString(14)+user.id+generateRandomString(11);
+        this.store.dispatch(AuthActions.setAuthenticatedUser({user: authUser}));
+        const token=generateRandomString(14)+authUser.id+generateRandomString(11);
         localStorage.setItem('tokenFlivingston', token); // genero el token con el id del usuario
-        return of(user);
+        return of(authUser);
       }),
       catchError((error) => throwError(() => error))
     );
   }
 
   logout() {
-    this._authUser$.next(null);
+    this.store.dispatch(AuthActions.unsetAuthenticatedUser());
     localStorage.removeItem('tokenFlivingston');
     this.router.navigate(['']);
   }
 
   verifyToken(checkProfile:boolean, profile: string): Observable<boolean> {
     let isValid=false;
-    this.profile='';
 
     const token = localStorage.getItem('tokenFlivingston');
     const userId = token ? token.slice(14, token.length-11) : '';
@@ -51,14 +56,13 @@ export class AuthService {
             
             if (!checkProfile || user["profile"]==profile)
               {
-                this._authUser$.next(user);
-                this.profile=user["profile"];
+                this.store.dispatch(AuthActions.setAuthenticatedUser({user: user}));
                 isValid=true;
               }else{
                 isValid=false;
               }            
           }else{
-            this._authUser$.next(null);
+            this.store.dispatch(AuthActions.unsetAuthenticatedUser());
           }
           return of(isValid);
         }),
@@ -69,7 +73,7 @@ export class AuthService {
     }
   }
 
-  getProfile():string {
-    return this.profile;
+  getProfile(): Observable<string> {
+    return this.store.select(selectUserProfile);
   }
 }

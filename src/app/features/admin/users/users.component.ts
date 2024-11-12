@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../../core/models/userModels';
 import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { UsersService } from '../../../core/services/users.service';
 import { Router } from '@angular/router';
 import { UsersFormComponent } from './users-form/users-form.component';
 import { UserFullNamePipe } from '../../../common/pipes/user-full-name.pipe';
+import { Store } from '@ngrx/store';
+import { selectIsLoadingUsers, selectLoadUsersError, selectUsers } from './store/user.selectors';
+import { UserActions } from './store/user.actions';
 
 @Component({
   selector: 'app-users',
@@ -26,45 +28,30 @@ export class UsersComponent implements OnInit{
   ];
 
   isLoading = false;
+  loadUsersError$: Observable<boolean>;
+  isLoadingUsers$: Observable<boolean>;
 
   constructor(
+      private store: Store,
       private dialog: MatDialog,
-      private usersService: UsersService,
       private router: Router
-    ){}
+    ){
+      this.users$ = this.store.select(selectUsers);
+      this.isLoadingUsers$ = this.store.select(selectIsLoadingUsers);
+      this.loadUsersError$ = this.store.select(selectLoadUsersError);
+    }
 
     ngOnInit(): void {
       this.loadUsers();
     }
 
     loadUsers():void{
-      this.isLoading = true;
-      this.users$ = this.usersService.getUsers();
-      this.users$.subscribe({
-        next: () => {
-        },
-        error: (err) => {
-          console.error(err);
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+      this.store.dispatch(UserActions.loadUsers());
     }
 
   onDelete(id: string) {
     if (confirm('Esta seguro?')) {
-      this.usersService.removeUserById(id).subscribe({
-        next: (users) => {
-        },
-        error: (err) => {
-          this.loadUsers();
-        },
-        complete: () => {
-          this.loadUsers();
-        },
-      });
+      this.store.dispatch(UserActions.deleteUser({data: id}));
     }
   }
 
@@ -81,27 +68,9 @@ export class UsersComponent implements OnInit{
           if (!!result) {
             this.isLoading = true;
             if (editingUser) {
-              this.usersService.updateUserById(editingUser.id, result).subscribe({
-                next: (users) => {
-                },
-                error: (err) => {
-                  this.loadUsers();
-                },
-                complete: () => {
-                  this.loadUsers();
-                },
-              });
+              this.store.dispatch(UserActions.updateUser({id: editingUser.id, data: result}));
             } else {
-              this.usersService.createUser(result).subscribe({
-                next: (users) => {
-                },
-                error: (err) => {
-                  this.loadUsers();
-                },
-                complete: () => {
-                  this.loadUsers();
-                },
-              });
+              this.store.dispatch(UserActions.createUser({data: result}));
             }
           }
         }

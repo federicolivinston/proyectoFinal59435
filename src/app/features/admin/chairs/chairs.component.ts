@@ -6,6 +6,7 @@ import { ChairsService } from '../../../core/services/chairs.service';
 import { ChairsFormComponent } from './chairs-form/chairs-form.component';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-chairs',
@@ -15,6 +16,8 @@ import { DatePipe } from '@angular/common';
 
 export class ChairsComponent implements OnInit{
   chairs$: Observable<Chair[]> = of([]);
+  profile$: Observable<string>;
+
   displayedColumns = [
     { columnDef: 'id', header: 'ID', cell: (row: any) => row.id },
     { columnDef: 'course', header: 'Nombre del Curso', cell: (row: any) => row.course },
@@ -24,20 +27,32 @@ export class ChairsComponent implements OnInit{
   ];
   actionFunctions = [
     { label: 'wysiwyg', function: (chair: any) => this.goToDetail(chair.id)},
-    { label: 'edit', function: (chair: Chair) => this.openForm(chair)},
-    { label: 'delete', function: (chair: any) => this.onDelete(chair.id)} 
   ];
 
+  actionsDisabled=true;
   isLoading = false;
 
   constructor(
+      private authService: AuthService,
       private dialog: MatDialog,
       private chairsService: ChairsService,
       private router: Router
-    ){}
+    ){
+      this.profile$ = this.authService.getProfile();
+    }
 
     ngOnInit(): void {
       this.loadChairs();
+      this.profile$.subscribe(profile => {
+        if (profile === 'admin') {
+          this.actionsDisabled = false;
+          this.actionFunctions = [
+            { label: 'wysiwyg', function: (chair: any) => this.goToDetail(chair.id) },
+            { label: 'edit', function: (chair: Chair) => this.openForm(chair) },
+            { label: 'delete', function: (chair: any) => this.onDelete(chair.id) }
+          ];
+        }
+      });
     }
 
     loadChairs():void{

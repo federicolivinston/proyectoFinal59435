@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -10,10 +11,10 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class NavBarComponent {
   
-  profile: string = ''; 
+  profile$: Observable<string>; 
 
   constructor(private authService: AuthService, private router: Router) {
-    this.profile = this.authService.getProfile();
+    this.profile$ = this.authService.getProfile();
   }
 
   logout(): void {

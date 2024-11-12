@@ -1,11 +1,14 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Profile, User } from '../../../../core/models/userModels';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { generateRandomString } from '../../../../common/utils/utils';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UsersService } from '../../../../core/services/users.service';
 import { passwordValidator, usernameValidator } from '../../../../common/utils/customValidators';
+import { Store } from '@ngrx/store';
+import { selectProfiles } from '../store/user.selectors';
+import { UserActions } from '../store/user.actions';
 
 interface UserDialogData {
   editingUser?: User;
@@ -16,18 +19,19 @@ interface UserDialogData {
   templateUrl: './users-form.component.html',
   styles: ''
 })
-export class UsersFormComponent {
+export class UsersFormComponent{
 
   userForm: FormGroup;
-  profiles$: Observable<Profile[]>;
+  profiles$: Observable<Profile[]> = of([]);
 
   constructor(
-    private profileService: UsersService,
+    private store: Store,
     private matDialogRef: MatDialogRef<UsersFormComponent>,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data?: UserDialogData,
   ) {
-    this.profiles$ = this.profileService.getProfiles();
+    this.profiles$ = this.store.select(selectProfiles);
+    this.store.dispatch(UserActions.loadProfiles());
 
     this.userForm = this.formBuilder.group({
       userName: [null, [usernameValidator(), Validators.required]],

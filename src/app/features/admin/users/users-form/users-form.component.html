@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ data?.editingUser ? "Editar" : "Nuevo" }} Alumno</h1>
+<h1 mat-dialog-title>{{ data?.editingUser ? "Editar" : "Nuevo" }} Usuario</h1>
 
 <div mat-dialog-content>
     <form [formGroup]="userForm">
@@ -57,6 +57,6 @@
 </div>
   
   <div mat-dialog-actions>
-    <button mat-dialog-close mat-button>Cancelar</button>
-    <button (click)="onSave()" mat-button [disabled]="userForm.invalid">Guardar</button>
+    <button mat-dialog-close mat-flat-button color="primary">Cancelar</button>
+    <button (click)="onSave()" mat-flat-button color="primary" [disabled]="userForm.invalid">Guardar</button>
   </div>

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './features/admin/admin.component';
 import { AuthComponent } from './features/auth/auth.component';
 import { authGuard } from './core/guards/auth.guard';
+import { NotFoundComponent } from './features/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -26,8 +27,10 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/admin'
-  }
+    component: NotFoundComponent,
+    loadChildren: () =>
+      import('./features/not-found/not-found.module').then((m) => m.NotFoundModule),
+  },
 ];
 
 @NgModule({

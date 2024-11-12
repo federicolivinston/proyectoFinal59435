@@ -1,11 +1,13 @@
-<mat-nav-list>
+<mat-nav-list class="cabecera">
     <a routerLink="/admin" mat-list-item>Inicio</a>
     <a routerLink="/admin/cursos" mat-list-item>Adm. Cursos</a>
     <a  routerLink="/admin/alumnos" mat-list-item>Adm. Alumnos</a>
     <a  routerLink="/admin/catedras" mat-list-item>Adm. Catedras</a>
-    <ng-container *ngIf="profile === 'admin'">
-        <p matSubheader>...</p>
-        <a  routerLink="/admin/usuarios" mat-list-item>Adm. Usuarios</a>
+    <ng-container *ngIf="profile$ | async as profile">
+        <ng-container *ngIf="profile === 'admin'">
+            <p matSubheader>...</p>
+            <a  routerLink="/admin/usuarios" mat-list-item>Adm. Usuarios</a>
+        </ng-container>
     </ng-container>
 
 

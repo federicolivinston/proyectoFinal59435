@@ -13,7 +13,7 @@
 $proyectoFinal59435-theme: mat.define-theme((
   color: (
     theme-type: light,
-    primary: mat.$azure-palette,
+    primary: mat.$cyan-palette,
     tertiary: mat.$blue-palette,
   ),
   density: (
@@ -36,5 +36,11 @@ $proyectoFinal59435-theme: mat.define-theme((
 // @include mat.color-variants-backwards-compatibility($proyectoFinal59435-theme);
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { 
+  height: 100%;
+}
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color:#f3edb1;
+}

@@ -23,7 +23,7 @@
   "profiles": [
     {
       "id": "admin",
-      "name": "Administrador"
+      "name": "Admin"
     },
     {
       "id": "operator",

@@ -6,6 +6,7 @@ import { Student, StudentDetail } from '../../../core/models/studentModels';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserFullNamePipe } from '../../../common/pipes/user-full-name.pipe';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-students',
@@ -15,6 +16,8 @@ import { UserFullNamePipe } from '../../../common/pipes/user-full-name.pipe';
 
 export class StudentsComponent  implements OnInit{
   students$: Observable<StudentDetail[]> = of([]);
+  profile$: Observable<string>;
+  
   displayedColumns = [
     { columnDef: 'id', header: 'ID', cell: (row: any) => row.id },
     { columnDef: 'fullName', header: 'Nombre', cell: (row: any) => row, pipe: new UserFullNamePipe(), },
@@ -22,22 +25,36 @@ export class StudentsComponent  implements OnInit{
     { columnDef: 'dni', header: 'DNI', cell: (row: any) => row.dni },
     { columnDef: 'province', header: 'Provincia', cell: (row: any) => row.province },
   ];
+
   actionFunctions = [
     { label: 'wysiwyg', function: (student: any) => this.goToDetail(student.id)},
-    { label: 'edit', function: (student: Student) => this.openForm(student)},
-    { label: 'delete', function: (student: any) => this.onDelete(student.id)} 
   ];
 
+  actionsDisabled=true;
   isLoading = false;
+  
 
   constructor(
+      private authService: AuthService,
       private dialog: MatDialog,
       private studentsService: StudentsService,
       private router: Router
-    ){}
+    ){
+      this.profile$ = this.authService.getProfile();
+    }
 
     ngOnInit(): void {
       this.loadStudents();
+      this.profile$.subscribe(profile => {
+        if(profile=='admin'){
+          this.actionsDisabled=false;
+          this.actionFunctions = [
+            { label: 'wysiwyg', function: (student: any) => this.goToDetail(student.id)},
+            { label: 'edit', function: (student: Student) => this.openForm(student)},
+            { label: 'delete', function: (student: any) => this.onDelete(student.id)} 
+          ];
+        }
+      });  
     }
 
     loadStudents():void{
