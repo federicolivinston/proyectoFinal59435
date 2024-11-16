@@ -11,7 +11,6 @@ import { StoreModule } from '@ngrx/store';
 import { inscriptionFeature } from './store/inscription.reducer';
 import { InscriptionFormComponent } from './inscription-form/inscription-form.component';
 
-
 @NgModule({
   declarations: [
     InscriptionsComponent,

@@ -1,21 +1,26 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { CourseActions } from './course.actions';
 import { Course, Degree } from '../../../../core/models/courseModels';
+import { Chair } from '../../../../core/models/chairModels';
 
 export const courseFeatureKey = 'course';
 
 export interface State {
   isLoadingCourses: boolean;
   loadCoursesError: boolean;
+  isLoadingChairsById: boolean;
   Courses: Course[];
   Degrees: Degree[];
+  ChairsByCourse: Chair[];
 }
 
 export const initialState: State = {
   isLoadingCourses:false,
   loadCoursesError:false,
+  isLoadingChairsById: false,
   Courses: [],
   Degrees: [],
+  ChairsByCourse: [],
 };
 
 export const reducer = createReducer(
@@ -114,6 +119,32 @@ export const reducer = createReducer(
       ...initialState,
       loadCoursesError: true,
       isLoadingCourses: false,
+    };
+  }),
+
+  on(CourseActions.loadChairsByCourse, (state) => {
+    return {
+      ...state,
+      isLoadingChairsById: true,
+      loadCoursesError: false,
+    };
+  }),
+
+  on(CourseActions.loadChairsByCourseSuccess, (state, action) => {
+    return {
+      ...state,
+      ChairsByCourse: action.data,
+      loadCoursesError: false,
+      isLoadingChairsById: false,
+    };
+  }),
+
+  on(CourseActions.loadChairsByCourseFailure, (state) => {
+    return {
+      ...state,
+      ...initialState,
+      loadCoursesError: true,
+      isLoadingChairsById: false,
     };
   }),
 );

@@ -42,10 +42,6 @@ export class ChairsService {
     );
   }
 
-  getChairsByIdCourse(id: string): Observable<Chair[]> {
-    return this.httpClient.get<Chair[]>(`${this.baseURL}/${this.baseEndPoint}/?idCourse=${id}`);
-  }
-
   createChair(data: Omit<Chair, 'id'>): Observable<Chair> {
     return this.httpClient.post<Chair>(`${this.baseURL}/${this.baseEndPoint}`, {
       ...data,

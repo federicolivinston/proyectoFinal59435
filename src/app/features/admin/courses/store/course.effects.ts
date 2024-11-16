@@ -12,6 +12,7 @@ export class CourseEffects {
 
   loadCourses$: Actions<Action<string>>;
   loadDegrees$: Actions<Action<string>>;
+  loadChairsByCourse$: Actions<Action<string>>;
   createCourse$: Actions<Action<string>>;
   createCourseSucces$: Actions<Action<string>>;
   deleteCourse$: Actions<Action<string>>;
@@ -44,6 +45,21 @@ export class CourseEffects {
             .pipe(
               map((response)=>CourseActions.loadDegreesSuccess({data: response}),
               catchError((error)=>of(CourseActions.loadDegreesFailure({error: true})))
+              )
+            )
+          )
+      );
+    });
+
+    this.loadChairsByCourse$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(CourseActions.loadChairsByCourse),
+        concatMap((action)=>
+          this.courseService
+            .getChairsByIdCourse(action.data)
+            .pipe(
+              map((response)=>CourseActions.loadChairsByCourseSuccess({data: response}),
+              catchError((error)=>of(CourseActions.loadChairsByCourseFailure({error: true})))
               )
             )
           )

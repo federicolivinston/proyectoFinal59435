@@ -1,5 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Course, Degree } from '../../../../core/models/courseModels';
+import { Chair } from '../../../../core/models/chairModels';
 
 export const CourseActions = createActionGroup({
   source: 'Course',
@@ -19,5 +20,8 @@ export const CourseActions = createActionGroup({
     'Load Degrees': emptyProps(),
     'Load Degrees Success': props<{ data: Degree[] }>(),
     'Load Degrees Failure': props<{ error: boolean }>(),
+    'Load Chairs By Course': props<{data: string}>(),
+    'Load Chairs By Course Success': props<{ data: Chair[] }>(),
+    'Load Chairs By Course Failure': props<{ error: boolean }>(),
   }
 });

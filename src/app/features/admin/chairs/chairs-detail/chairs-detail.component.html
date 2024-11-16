@@ -1,4 +1,5 @@
-<mat-card *ngIf="chair" class="example-card" appearance="outlined">
+<mat-card *ngIf="chair$ | async as chair" class="example-card" appearance="outlined">
+  <div *ngIf="chair;">
     <mat-card-header>
       <mat-card-title-group>
         <mat-card-title>{{chair.course}}</mat-card-title>
@@ -12,6 +13,8 @@
             <mat-list-item role="listitem">Vacantes Habilitadas: {{chair.vacants}}</mat-list-item>
           </mat-list>
     </mat-card-content>
-  </mat-card>
+  </div>  
+ </mat-card>
+
   <h1 appTitleFont>Alumnos Inscriptos:</h1>
-  <app-inscriptions *ngIf="chair" [id]="chair.id" [filterType]="'chair'"></app-inscriptions>
+    <app-inscriptions *ngIf="chair$ | async as chair" [id]="chair.id" [filterType]="'chair'"></app-inscriptions>

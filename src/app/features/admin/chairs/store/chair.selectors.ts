@@ -24,3 +24,8 @@ export const selectChairCourses = createSelector(
   selectChairState,
   (state) => state.ChairsCourses
 );
+
+export const selectChairById = (id: string) => createSelector(
+  selectChairState,
+  (state) => state.Chairs.find(chair => chair.id === id)
+);

@@ -11,7 +11,6 @@ import { of } from 'rxjs';
 export class StudentEffects {
 
   loadStudents$: Actions<Action<string>>;
-  //loadDegrees$: Actions<Action<string>>;
   createStudent$: Actions<Action<string>>;
   createStudentSucces$: Actions<Action<string>>;
   deleteStudent$: Actions<Action<string>>;
@@ -34,21 +33,6 @@ export class StudentEffects {
           )
       );
     });
-
-   /* this.loadDegrees$ = createEffect(() => {
-      return this.actions$.pipe(
-        ofType(StudentActions.loadDegrees),
-        concatMap((action)=>
-          this.StudentService
-            .getDegrees()
-            .pipe(
-              map((response)=>StudentActions.loadDegreesSuccess({data: response}),
-              catchError((error)=>of(StudentActions.loadDegreesFailure({error: true})))
-              )
-            )
-          )
-      );
-    });*/
 
     this.createStudent$ = createEffect(() => {
       return this.actions$.pipe(

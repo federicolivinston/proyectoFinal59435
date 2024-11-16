@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Profile, User } from '../models/userModels';
-import { BehaviorSubject, concatMap, delay, map, Observable, of, throwError } from 'rxjs';
+import {  concatMap,  map, Observable  } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { generateRandomString } from '../../common/utils/utils';
+
 
 @Injectable({
   providedIn: 'root'

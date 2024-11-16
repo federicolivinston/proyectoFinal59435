@@ -20,7 +20,7 @@ export const selectIsLoadingStudents = createSelector(
   (state) => state.isLoadingStudents
 );
 
-/*export const selectDegrees = createSelector(
+export const selectStudentById = (id: string) => createSelector(
   selectStudentState,
-  (state) => state.Degrees
-);*/
+  (state) => state.Students.find(student => student.id === id)
+);

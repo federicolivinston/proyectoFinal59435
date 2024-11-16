@@ -1,11 +1,12 @@
 import { DatePipe, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CoursesService } from '../../../../core/services/courses.service';
 import { Course } from '../../../../core/models/courseModels';
 import { Observable, of } from 'rxjs';
 import { Chair } from '../../../../core/models/chairModels';
-import { ChairsService } from '../../../../core/services/chairs.service';
+import { select, Store } from '@ngrx/store';
+import { selectChairsByCourse, selectCourseById, selectCourses, selectIsLoadingChairsById } from '../store/course.selectors';
+import { CourseActions } from '../store/course.actions';
 
 @Component({
   selector: 'app-courses-detail',
@@ -13,7 +14,7 @@ import { ChairsService } from '../../../../core/services/chairs.service';
   styleUrl: './courses-detail.component.scss'
 })
 export class CoursesDetailComponent  implements OnInit{
-  course: Course | null = null;
+  course$: Observable<Course | undefined> = of(undefined);
   chairs$: Observable<Chair[]> = of([]);
   displayedColumns = [
     { columnDef: 'id', header: 'ID', cell: (row: any) => row.id },
@@ -22,48 +23,36 @@ export class CoursesDetailComponent  implements OnInit{
     { columnDef: 'vacants', header: 'Vacantes', cell: (row: any) => row.vacants },
   ];
   actionFunctions = [];
-
+  
   isLoading = false;
-  isLoadingChairs = false;
+  isLoadingChairsById$: Observable<boolean>;
   
   constructor(
-    private chairsService: ChairsService,
-    private coursesService: CoursesService,
+    private store:Store,
     private route: ActivatedRoute,
     private location: Location
-  ){}
+  ){
+    this.isLoadingChairsById$ = this.store.select(selectIsLoadingChairsById);
+    this.chairs$ = this.store.select(selectChairsByCourse);
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id'); 
       if (id) {
-        this.loadCourse(id); 
+        this.store.select(selectCourses).subscribe((courses) => {
+          if (courses.length === 0) {
+            this.store.dispatch(CourseActions.loadCourses());
+          }
+        });
+        this.loadCourse(id);
+        this.store.dispatch(CourseActions.loadChairsByCourse({data: id})); 
       }
     });
   }
  
   loadCourse(id: string):void{
-    this.isLoading = true; 
-    this.isLoadingChairs = true;
-    this.coursesService.getCourseById(id).subscribe(course => {
-      this.course = course; 
-      this.isLoading = false; 
-    }, () => {
-      this.isLoading = false; 
-    });
-
-    this.chairs$ = this.chairsService.getChairsByIdCourse(id);
-      this.chairs$.subscribe({
-        next: () => {
-        },
-        error: (err) => {
-          console.error(err);
-          this.isLoadingChairs = false;
-        },
-        complete: () => {
-          this.isLoadingChairs = false;
-        },
-      });
+    this.course$ = this.store.pipe(select(selectCourseById(id)));
   }
 
   goBack(): void {

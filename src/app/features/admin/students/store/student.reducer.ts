@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { StudentActions } from './student.actions';
-import { Student, StudentDetail } from '../../../../core/models/studentModels';
+import { StudentDetail } from '../../../../core/models/studentModels';
 
 export const studentFeatureKey = 'student';
 

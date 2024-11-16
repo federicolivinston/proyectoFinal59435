@@ -3,6 +3,7 @@ import { Course, Degree } from '../models/courseModels';
 import { concatMap, delay, map, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Chair } from '../models/chairModels';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class CoursesService {
   private baseURL = environment.apiBaseUrl;
   private baseEndPoint = environment.coursesEndPoint;
   private degreeEndPoint = environment.degreesEndPoint;
+  private chairEndPoint = environment.chairsEndPoint;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -53,4 +55,9 @@ export class CoursesService {
   getDegrees(): Observable<Degree[]> {
     return this.httpClient.get<Degree[]>(`${this.baseURL}/${this.degreeEndPoint}`);
   }
+
+  getChairsByIdCourse(id: string): Observable<Chair[]> {
+    return this.httpClient.get<Chair[]>(`${this.baseURL}/${this.chairEndPoint}/?idCourse=${id}`);
+  }
+
 }

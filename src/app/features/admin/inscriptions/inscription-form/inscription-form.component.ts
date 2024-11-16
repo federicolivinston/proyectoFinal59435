@@ -61,6 +61,3 @@ export class InscriptionFormComponent {
   }
 }
 
-function loadFormOptions(arg0: { id: any; tipo: string; }): any {
-  throw new Error('Function not implemented.');
-}

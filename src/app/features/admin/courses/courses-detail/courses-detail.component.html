@@ -1,21 +1,24 @@
 
-<mat-card *ngIf="course" class="example-card" appearance="outlined">
-  <mat-card-header>
-    <mat-card-title-group>
-      <mat-card-title>{{course.title}}</mat-card-title>
-      <button mat-icon-button (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>
-    </mat-card-title-group>
-  </mat-card-header>
-  <mat-card-content>
-      <mat-list class="mat-list">
-          <mat-list-item class="mat-list-item">Grado: {{course.degree}}</mat-list-item>
-          <mat-list-item class="mat-list-item">Fecha de creacion: {{course.createdAt | date: 'dd/mm/yyyy'}}</mat-list-item>
-        </mat-list>
-  </mat-card-content>
+<mat-card *ngIf="course$ | async as course" class="example-card" appearance="outlined">
+  <div *ngIf="course;">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>{{course.title}}</mat-card-title>
+        <button mat-icon-button (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-list class="mat-list">
+            <mat-list-item class="mat-list-item">Grado: {{course.degree}}</mat-list-item>
+            <mat-list-item class="mat-list-item">Fecha de creacion: {{course.createdAt | date: 'dd/mm/yyyy'}}</mat-list-item>
+          </mat-list>
+    </mat-card-content>
+  </div>
 </mat-card>
+
 <h1 appTitleFont>Catedras asociadas:</h1>
 <div class="mat-elevation-z8 tableContainer">    
-  @if (isLoadingChairs) {
+  @if (isLoadingChairsById$ | async) {
     <div class="spinnerContainer"><mat-spinner></mat-spinner></div>
     } @else {
       <app-common-table [columns]="displayedColumns" [data]="chairs$" [actions]="actionFunctions"></app-common-table>

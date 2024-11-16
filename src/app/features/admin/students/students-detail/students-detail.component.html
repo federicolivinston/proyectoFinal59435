@@ -1,19 +1,21 @@
-  <mat-card *ngIf="student" class="example-card" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title-group>
-        <mat-card-title>{{student | userFullName}}</mat-card-title>
-        <button mat-icon-button (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>
-      </mat-card-title-group>
-    </mat-card-header>
-    <mat-card-content>
-        <mat-list class="mat-list">
-          <mat-list-item class="mat-list-item">DNI: {{student.dni}}</mat-list-item>
-          <mat-list-item class="mat-list-item">Email: {{student.email}}</mat-list-item>
-          <mat-list-item class="mat-list-item">Direccion: {{student.street}}</mat-list-item>
-          <mat-list-item class="mat-list-item">Provincia: {{student.province}}</mat-list-item>
-          <mat-list-item class="mat-list-item">Telefono: {{student.phone}}</mat-list-item>
-        </mat-list>
-    </mat-card-content>
+  <mat-card *ngIf="student$ | async as student" class="example-card" appearance="outlined">
+    <div *ngIf="student;">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>{{student | userFullName}}</mat-card-title>
+          <button mat-icon-button (click)="goBack()"><mat-icon>arrow_back</mat-icon></button>
+        </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-content>
+          <mat-list class="mat-list">
+            <mat-list-item class="mat-list-item">DNI: {{student.dni}}</mat-list-item>
+            <mat-list-item class="mat-list-item">Email: {{student.email}}</mat-list-item>
+            <mat-list-item class="mat-list-item">Direccion: {{student.street}}</mat-list-item>
+            <mat-list-item class="mat-list-item">Provincia: {{student.province}}</mat-list-item>
+            <mat-list-item class="mat-list-item">Telefono: {{student.phone}}</mat-list-item>
+          </mat-list>
+      </mat-card-content>
+    </div>
   </mat-card>
   <h1 appTitleFont>Inscripciones a Cursos:</h1>
-  <app-inscriptions *ngIf="student" [id]="student.id" [filterType]="'student'"></app-inscriptions>
+  <app-inscriptions *ngIf="student$ | async as student" [id]="student.id" [filterType]="'student'"></app-inscriptions>
