@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentsFormComponent } from './students-form/students-form.component';
-import { StudentsService } from '../../../core/services/students.service';
 import { Student, StudentDetail } from '../../../core/models/studentModels';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserFullNamePipe } from '../../../common/pipes/user-full-name.pipe';
-import { AuthService } from '../../../core/services/auth.service';
+import { Store } from '@ngrx/store';
+import { selectIsLoadingStudents, selectLoadStudentsError, selectStudents } from './store/student.selectors';
+import { StudentActions } from './store/student.actions';
+import { selectUserProfile } from '../../../store/auth.selectors';
 
 @Component({
   selector: 'app-students',
@@ -32,15 +34,19 @@ export class StudentsComponent  implements OnInit{
 
   actionsDisabled=true;
   isLoading = false;
+  loadStudentError$: Observable<boolean>;
+  isLoadingStudent$: Observable<boolean>;
   
 
   constructor(
-      private authService: AuthService,
+      private store: Store,
       private dialog: MatDialog,
-      private studentsService: StudentsService,
       private router: Router
     ){
-      this.profile$ = this.authService.getProfile();
+      this.profile$ = this.store.select(selectUserProfile);
+      this.students$ = this.store.select(selectStudents);
+      this.isLoadingStudent$ = this.store.select(selectIsLoadingStudents);
+      this.loadStudentError$ = this.store.select(selectLoadStudentsError);
     }
 
     ngOnInit(): void {
@@ -58,33 +64,12 @@ export class StudentsComponent  implements OnInit{
     }
 
     loadStudents():void{
-      this.isLoading = true;
-      this.students$ = this.studentsService.getStudents();
-      this.students$.subscribe({
-        next: () => {
-        },
-        error: (err) => {
-          console.error(err);
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+      this.store.dispatch(StudentActions.loadStudents());
     }
 
   onDelete(id: string) {
     if (confirm('Esta seguro?')) {
-      this.studentsService.removeStudentById(id).subscribe({
-        next: (students) => {
-        },
-        error: (err) => {
-          this.loadStudents();
-        },
-        complete: () => {
-          this.loadStudents();
-        },
-      });
+      this.store.dispatch(StudentActions.deleteStudent({data: id}));
     }
   }
 
@@ -101,27 +86,9 @@ export class StudentsComponent  implements OnInit{
           if (!!result) {
             this.isLoading = true;
             if (editingStudent) {
-              this.studentsService.updateStudentById(editingStudent.id, result).subscribe({
-                next: (students) => {
-                },
-                error: (err) => {
-                  this.loadStudents();
-                },
-                complete: () => {
-                  this.loadStudents();
-                },
-              });
+              this.store.dispatch(StudentActions.updateStudent({id: editingStudent.id, data: result}));
             } else {
-              this.studentsService.createStudent(result).subscribe({
-                next: (students) => {
-                },
-                error: (err) => {
-                  this.loadStudents();
-                },
-                complete: () => {
-                  this.loadStudents();
-                },
-              });
+              this.store.dispatch(StudentActions.createStudent({data: result}));
             }
           }
         }

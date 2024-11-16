@@ -27,7 +27,6 @@ export class UsersComponent implements OnInit{
     { label: 'delete', function: (user: any) => this.onDelete(user.id)} 
   ];
 
-  isLoading = false;
   loadUsersError$: Observable<boolean>;
   isLoadingUsers$: Observable<boolean>;
 
@@ -66,7 +65,6 @@ export class UsersComponent implements OnInit{
       .subscribe({
         next: (result) => {
           if (!!result) {
-            this.isLoading = true;
             if (editingUser) {
               this.store.dispatch(UserActions.updateUser({id: editingUser.id, data: result}));
             } else {

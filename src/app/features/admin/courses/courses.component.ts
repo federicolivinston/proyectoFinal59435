@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CoursesService } from '../../../core/services/courses.service';
 import { Course } from '../../../core/models/courseModels';
 import { MatDialog } from '@angular/material/dialog';
 import { CoursesFormComponent } from './courses-form/courses-form.component';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { selectCourses, selectIsLoadingCourses, selectLoadCoursesError } from './store/course.selectors';
+import { CourseActions } from './store/course.actions';
+import { Store } from '@ngrx/store';
+import { selectUserProfile } from '../../../store/auth.selectors';
 
 @Component({
   selector: 'app-courses',
@@ -27,23 +29,22 @@ export class CoursesComponent implements OnInit{
   ];
 
   actionsDisabled=true;
-  isLoading = false;
+  loadCoursesError$: Observable<boolean>;
+  isLoadingCourses$: Observable<boolean>;
 
   constructor(
-    private authService: AuthService,
+    private store: Store,
     private dialog: MatDialog,
-    private coursesService: CoursesService,
     private router: Router
   ){
-    this.profile$ = this.authService.getProfile();
+    this.profile$ = this.store.select(selectUserProfile);
+    this.courses$ = this.store.select(selectCourses);
+    this.isLoadingCourses$ = this.store.select(selectIsLoadingCourses);
+    this.loadCoursesError$ = this.store.select(selectLoadCoursesError);
   }
 
   ngOnInit(): void {
     this.loadCourses();
-  }
-
-  loadCourses():void{
-    this.isLoading = true;
     this.profile$.subscribe(profile => {
       if (profile === 'admin') {
         this.actionsDisabled = false;
@@ -54,32 +55,15 @@ export class CoursesComponent implements OnInit{
         ];
       }
     });
-    this.courses$ = this.coursesService.getCourses();
-    this.courses$.subscribe({
-      next: () => {
-      },
-      error: (err) => {
-        console.error(err);
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
+  }
+
+  loadCourses():void{
+    this.store.dispatch(CourseActions.loadCourses());
   }
 
   onDelete(id: string) {
     if (confirm('Esta seguro?')) {
-      this.coursesService.removeCourseById(id).subscribe({
-        next: (courses) => {
-        },
-        error: (err) => {
-          this.loadCourses();
-        },
-        complete: () => {
-          this.loadCourses();
-        },
-      });
+      this.store.dispatch(CourseActions.deleteCourse({data: id}));
     }
   }
 
@@ -94,29 +78,10 @@ export class CoursesComponent implements OnInit{
       .subscribe({
         next: (result) => {
           if (!!result) {
-            this.isLoading = true;
             if (editingCourse) {
-              this.coursesService.updateCourseById(editingCourse.id, result).subscribe({
-                next: (courses) => {
-                },
-                error: (err) => {
-                  this.loadCourses();
-                },
-                complete: () => {
-                  this.loadCourses();
-                },
-              });
+              this.store.dispatch(CourseActions.updateCourse({id: editingCourse.id, data: result}));
             } else {
-              this.coursesService.createCourse(result).subscribe({
-                next: (courses) => {
-                },
-                error: (err) => {
-                  this.loadCourses();
-                },
-                complete: () => {
-                  this.loadCourses();
-                },
-              });
+              this.store.dispatch(CourseActions.createCourse({data: result}));
             }
           }
         }

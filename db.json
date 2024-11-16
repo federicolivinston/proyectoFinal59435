@@ -30,6 +30,20 @@
       "name": "Operador"
     }
   ],
+  "degrees": [
+    {
+      "id": "postgrado",
+      "name": "Postgrado"
+    },
+    {
+      "id": "terciario",
+      "name": "Terciario"
+    },
+    {
+      "id": "universitario",
+      "name": "Universitario"
+    }
+  ],
   "students": [
     {
       "id": "WRUJBZ",
@@ -218,93 +232,33 @@
   ],
   "inscriptions": [
     {
-      "id": "aaaa",
+      "id": "d2a2",
       "idChair": "WRUJBZ",
       "idStudent": "WRUJBZ"
     },
     {
-      "id": "084f",
-      "idChair": "WRUJBZ",
-      "idStudent": "GNFUVQ"
-    },
-    {
-      "id": "b485",
-      "idChair": "WRUJBZ",
-      "idStudent": "GNFUVQ"
-    },
-    {
-      "id": "51f3",
-      "idChair": "WRUJBZ",
-      "idStudent": "GNFUVQ"
-    },
-    {
-      "id": "52f8",
-      "idChair": "WRUJBZ",
-      "idStudent": "WRUJBZ"
-    },
-    {
-      "id": "90ba",
-      "idChair": "WRUJBZ",
-      "idStudent": "WRUJBZ"
-    },
-    {
-      "id": "be79",
-      "idChair": "WRUJBZ",
-      "idStudent": "GNFUVQ"
-    },
-    {
-      "id": "fde7",
-      "idChair": "GNFUVQ",
-      "idStudent": "WRUJBZ"
-    },
-    {
-      "id": "232e",
-      "idChair": "WRUJBZ",
-      "idStudent": "PBXQEW"
-    },
-    {
-      "id": "5ac0",
-      "idChair": "GNFUVQ",
-      "idStudent": "PBXQEW"
-    },
-    {
-      "id": "71e5",
-      "idChair": "GNFUVQ",
-      "idStudent": "GNFUVQ"
-    },
-    {
-      "id": "dfb5",
+      "id": "e810",
       "idChair": "PBXQEW",
+      "idStudent": "WRUJBZ"
+    },
+    {
+      "id": "8961",
+      "idChair": "WRUJBZ",
       "idStudent": "GNFUVQ"
     },
     {
-      "id": "ca0c",
-      "idChair": "PBXQEW",
-      "idStudent": "PBXQEW"
-    },
-    {
-      "id": "061c",
-      "idChair": "PBXQEW",
+      "id": "a330",
+      "idChair": "WRUJBZ",
       "idStudent": "ENPYBP"
     },
     {
-      "id": "387e",
+      "id": "b2de",
       "idChair": "WRUJBZ",
-      "idStudent": "PBXQEW"
+      "idStudent": "WAETFW"
     },
     {
-      "id": "51a4",
-      "idChair": "WRUJBZ",
-      "idStudent": "CNLEMX"
-    },
-    {
-      "id": "78b8",
+      "id": "016b",
       "idChair": "GNFUVQ",
-      "idStudent": "WRUJBZ"
-    },
-    {
-      "id": "ce2c",
-      "idChair": "PBXQEW",
       "idStudent": "WRUJBZ"
     }
   ],

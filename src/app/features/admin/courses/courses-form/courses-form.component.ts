@@ -1,8 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { Course } from '../../../../core/models/courseModels';
+import { Course, Degree } from '../../../../core/models/courseModels';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { generateRandomString } from '../../../../common/utils/utils';
+import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectDegrees } from '../store/course.selectors';
+import { CourseActions } from '../store/course.actions';
 
 interface CourseDialogData {
   editingCourse?: Course;
@@ -16,13 +20,17 @@ interface CourseDialogData {
 export class CoursesFormComponent {
 
   courseForm: FormGroup;
-  degreeOptions: string[] = ['Postgrado', 'Terciario', 'Universitario'];
+  degrees$: Observable<Degree[]> = of([]);
 
   constructor(
+    private store: Store,
     private matDialogRef: MatDialogRef<CoursesFormComponent>,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data?: CourseDialogData
   ) {
+    this.degrees$ = this.store.select(selectDegrees);
+    this.store.dispatch(CourseActions.loadDegrees());
+
     this.courseForm = this.formBuilder.group({
       title: [null, [Validators.minLength(3), Validators.required]],
       degree: [null, [Validators.minLength(3), Validators.required]],

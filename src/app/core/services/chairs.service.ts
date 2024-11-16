@@ -4,7 +4,6 @@ import { concatMap, forkJoin, map, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Course } from '../models/courseModels';
-import { Inscription } from '../models/inscriptionModels';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,6 @@ export class ChairsService {
   private baseURL = environment.apiBaseUrl;
   private baseEndPoint = environment.chairsEndPoint;
   private courseEndPoint = environment.coursesEndPoint;
-  private inscriptionsEndPoint = environment.inscriptionsEndPoint;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -41,31 +39,6 @@ export class ChairsService {
         ...chair,
         course: courses.find(c => c.id === chair.idCourse)?.title || ''
       }))
-    );
-  }
-
-  getChairsByIdStudent(id: string): Observable<ChairDetail []> {
-
-    return forkJoin({
-      inscriptions: this.httpClient.get<Inscription[]>(`${this.baseURL}/${this.inscriptionsEndPoint}/?idStudent=${id}`),
-      chairs: this.httpClient.get<Chair[]>(`${this.baseURL}/${this.baseEndPoint}`),
-      courses: this.httpClient.get<Course[]>(`${this.baseURL}/${this.courseEndPoint}`)
-    }).pipe(
-      map(({ inscriptions, chairs, courses }) => {
-        return chairs
-          .filter(chair => 
-            inscriptions.some((inscription: Inscription) => inscription.idChair === chair.id)
-          )
-          .map(chair => {
-            const inscription = inscriptions.find(insc => insc.idChair === chair.id);
-            return {
-              ...chair,
-              course: courses.find(c => c.id === chair.idCourse)?.title || '',
-              idInscription: inscription ? inscription.id : undefined 
-            };
-          })
-          .filter(chair => chair.idInscription !== undefined); 
-      })
     );
   }
 

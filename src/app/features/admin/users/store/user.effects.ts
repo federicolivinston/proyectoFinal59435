@@ -55,7 +55,6 @@ export class UserEffects {
       return this.actions$.pipe(
         ofType(UserActions.createUser), 
         concatMap((action) => { 
-          console.log(action.data);
           return this.userService.createUser(action.data).pipe(
             map((newUser) => UserActions.createUserSuccess({ data: newUser })),
             catchError((error) =>
@@ -77,7 +76,6 @@ export class UserEffects {
       return this.actions$.pipe(
         ofType(UserActions.deleteUser), 
         concatMap((action) => { 
-          console.log(action.data);
           return this.userService.removeUserById(action.data).pipe(
             map((response) => UserActions.deleteUserSuccess({ data: response })),
             catchError((error) =>
@@ -99,7 +97,6 @@ export class UserEffects {
       return this.actions$.pipe(
         ofType(UserActions.updateUser), 
         concatMap((action) => { 
-          console.log(action.data);
           return this.userService.updateUserById(action.id, action.data).pipe(
             map((response) => UserActions.updateUserSuccess({ data: response })),
             catchError((error) =>

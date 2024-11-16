@@ -4,7 +4,6 @@ import { concatMap, delay, forkJoin, map, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Province } from '../models/provinceModels';
-import { Inscription } from '../models/inscriptionModels';
 
 @Injectable({
   providedIn: 'root'
@@ -40,23 +39,6 @@ export class StudentsService {
         ...student,
         province: provinces.find(p => p.id === student.idProvince)?.name || ''
       }))
-    );
-  }
-
-  getStudentsByIdChair(id: string): Observable<StudentDetail []> {
-    return forkJoin({
-      inscriptions: this.httpClient.get<Inscription[]>(`${this.baseURL}/${this.inscriptionsEndPoint}/?idChair=${id}`),
-      students: this.httpClient.get<Student[]>(`${this.baseURL}/${this.baseEndPoint}`)
-    }).pipe(
-      map(({ inscriptions, students }) => {
-        return students.map(student => {
-          const inscription = inscriptions.find(insc => insc.idStudent === student.id);
-          return {
-            ... student,
-            idInscription: inscription ? inscription.id : undefined 
-          };
-        }).filter(item => item.idInscription !== undefined); 
-      })
     );
   }
 

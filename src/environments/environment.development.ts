@@ -7,4 +7,5 @@ export const environment = {
     profilesEndPoint:"profiles",
     inscriptionsEndPoint: "inscriptions",
     provincesEndPoint: "provinces",
+    degreesEndPoint: "degrees",
 };

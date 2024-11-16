@@ -7,7 +7,7 @@
     Nueva Catedra
 </button>
 <div class="mat-elevation-z8 tableContainer">
-@if (isLoading) {
+@if (isLoadingChairs$ | async) {
   <div class="spinnerContainer"><mat-spinner></mat-spinner></div>
   } @else {  
   <app-common-table [columns]="displayedColumns" [data]="chairs$" [actions]="actionFunctions"></app-common-table>

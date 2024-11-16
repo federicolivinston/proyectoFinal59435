@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Course } from '../models/courseModels';
+import { Course, Degree } from '../models/courseModels';
 import { concatMap, delay, map, Observable, of } from 'rxjs';
-import { generateRandomString } from '../../common/utils/utils';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,6 +11,7 @@ export class CoursesService {
   
   private baseURL = environment.apiBaseUrl;
   private baseEndPoint = environment.coursesEndPoint;
+  private degreeEndPoint = environment.degreesEndPoint;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -48,5 +48,9 @@ export class CoursesService {
     return this.httpClient
       .patch<Course>(`${this.baseURL}/${this.baseEndPoint}/${id}`, update)
       .pipe(concatMap(() => this.getCourses()));
+  }
+
+  getDegrees(): Observable<Degree[]> {
+    return this.httpClient.get<Degree[]>(`${this.baseURL}/${this.degreeEndPoint}`);
   }
 }

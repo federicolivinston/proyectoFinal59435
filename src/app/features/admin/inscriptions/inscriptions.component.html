@@ -1,0 +1,13 @@
+<button mat-flat-button color="primary" (click)="openForm(id, filterType)">
+  <mat-icon>
+      add
+  </mat-icon>
+  Nueva Inscripcion
+</button>
+<div class="mat-elevation-z8 tableContainer">    
+@if (isLoadingInscriptions$ | async) {
+    <div class="spinnerContainer"><mat-spinner></mat-spinner></div>
+    } @else {
+      <app-common-table [columns]="displayedColumns" [data]="Inscriptions$" [actions]="actionFunctions"></app-common-table>  
+  }
+</div>

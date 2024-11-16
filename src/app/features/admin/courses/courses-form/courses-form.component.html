@@ -16,8 +16,8 @@
           <mat-form-field class="example-form-field w-100">
             <mat-label>Grado</mat-label>
             <mat-select formControlName="degree">
-              <mat-option *ngFor="let option of degreeOptions" [value]="option">
-                {{ option }}
+              <mat-option *ngFor="let option of degrees$ | async" [value]="option.id">
+                {{ option.name }}
               </mat-option>
             </mat-select>
             <mat-error>

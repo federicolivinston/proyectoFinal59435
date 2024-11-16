@@ -5,3 +5,8 @@ export interface Course {
     createdAt: Date;
   }
   
+  export interface Degree {
+    id: string;
+    name: string;
+  }
+  

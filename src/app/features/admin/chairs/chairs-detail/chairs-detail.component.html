@@ -14,16 +14,4 @@
     </mat-card-content>
   </mat-card>
   <h1 appTitleFont>Alumnos Inscriptos:</h1>
-  <button mat-flat-button color="primary" (click)="openForm('chair')">
-    <mat-icon>
-        add
-    </mat-icon>
-    Nueva Inscripcion
-  </button>
-  <div class="mat-elevation-z8 tableContainer">    
-    @if (isLoadingInscriptions) {
-      <div class="spinnerContainer"><mat-spinner></mat-spinner></div>
-      } @else {
-        <app-common-table [columns]="displayedColumns" [data]="students$" [actions]="actionFunctions"></app-common-table>  
-    }
-  </div>
+  <app-inscriptions *ngIf="chair" [id]="chair.id" [filterType]="'chair'"></app-inscriptions>

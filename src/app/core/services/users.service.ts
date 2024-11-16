@@ -45,7 +45,6 @@ export class UsersService {
   }
 
   createUser(data: Omit<User, 'id'>): Observable<User> {
-    console.log(data);
     return this.httpClient.post<User>(`${this.baseURL}/${this.baseEndPoint}`, {
       ...data,
       createdAt: new Date().toISOString(),

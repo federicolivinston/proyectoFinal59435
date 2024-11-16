@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Chair } from '../../../core/models/chairModels';
+import { Chair, ChairDetail } from '../../../core/models/chairModels';
 import { MatDialog } from '@angular/material/dialog';
-import { ChairsService } from '../../../core/services/chairs.service';
 import { ChairsFormComponent } from './chairs-form/chairs-form.component';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { AuthService } from '../../../core/services/auth.service';
+import { Store } from '@ngrx/store';
+import { selectChairs, selectIsLoadingChairs, selectLoadChairsError } from './store/chair.selectors';
+import { ChairActions } from './store/chair.actions';
+import { selectUserProfile } from '../../../store/auth.selectors';
 
 @Component({
   selector: 'app-chairs',
@@ -15,7 +17,7 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 
 export class ChairsComponent implements OnInit{
-  chairs$: Observable<Chair[]> = of([]);
+  chairs$: Observable<ChairDetail[]> = of([]);
   profile$: Observable<string>;
 
   displayedColumns = [
@@ -30,15 +32,18 @@ export class ChairsComponent implements OnInit{
   ];
 
   actionsDisabled=true;
-  isLoading = false;
+  loadChairsError$: Observable<boolean>;
+  isLoadingChairs$: Observable<boolean>;
 
   constructor(
-      private authService: AuthService,
+      private store: Store,
       private dialog: MatDialog,
-      private chairsService: ChairsService,
       private router: Router
     ){
-      this.profile$ = this.authService.getProfile();
+      this.profile$ = this.store.select(selectUserProfile);
+      this.chairs$ = this.store.select(selectChairs);
+      this.isLoadingChairs$ = this.store.select(selectIsLoadingChairs);
+      this.loadChairsError$ = this.store.select(selectLoadChairsError);
     }
 
     ngOnInit(): void {
@@ -56,33 +61,12 @@ export class ChairsComponent implements OnInit{
     }
 
     loadChairs():void{
-      this.isLoading = true;
-      this.chairs$ = this.chairsService.getChairs();
-      this.chairs$.subscribe({
-        next: () => {
-        },
-        error: (err) => {
-          console.error(err);
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+      this.store.dispatch(ChairActions.loadChairs());
     }
 
   onDelete(id: string) {
     if (confirm('Esta seguro?')) {
-      this.chairsService.removeChairById(id).subscribe({
-        next: (chairs) => {
-        },
-        error: (err) => {
-          this.loadChairs();
-        },
-        complete: () => {
-          this.loadChairs();
-        },
-      });
+      this.store.dispatch(ChairActions.deleteChair({data: id}));
     }
   }
 
@@ -97,29 +81,10 @@ export class ChairsComponent implements OnInit{
       .subscribe({
         next: (result) => {
           if (!!result) {
-            this.isLoading = true;
             if (editingChair) {
-              this.chairsService.updateChairById(editingChair.id, result).subscribe({
-                next: (chairs) => {
-                },
-                error: (err) => {
-                  this.loadChairs();
-                },
-                complete: () => {
-                  this.loadChairs();
-                },
-              });
+              this.store.dispatch(ChairActions.updateChair({id: editingChair.id, data: result}));
             } else {
-              this.chairsService.createChair(result).subscribe({
-                next: (chairs) => {
-                },
-                error: (err) => {
-                  this.loadChairs();
-                },
-                complete: () => {
-                  this.loadChairs();
-                },
-              });
+              this.store.dispatch(ChairActions.createChair({data: result}));
             }
           }
         }

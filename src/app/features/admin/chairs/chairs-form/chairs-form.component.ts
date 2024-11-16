@@ -3,9 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { generateRandomString } from '../../../../common/utils/utils';
 import { Chair } from '../../../../core/models/chairModels';
-import { Observable } from 'rxjs';
-import { CoursesService } from '../../../../core/services/courses.service';
+import { Observable, of } from 'rxjs';
 import { Course } from '../../../../core/models/courseModels';
+import { Store } from '@ngrx/store';
+import { selectChairCourses } from '../store/chair.selectors';
+import { ChairActions } from '../store/chair.actions';
+
+
 
 interface ChairDialogData {
   editingChair?: Chair;
@@ -19,15 +23,17 @@ interface ChairDialogData {
 export class ChairsFormComponent {
 
   chairForm: FormGroup;
-  courses$: Observable<Course[]>;
+  courses$: Observable<Course[]> = of([]);
+;
 
   constructor(
-    private coursesService: CoursesService,
+    private store: Store,
     private matDialogRef: MatDialogRef<ChairsFormComponent>,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data?: ChairDialogData
   ) {
-    this.courses$ = this.coursesService.getCourses();
+    this.courses$ = this.store.select(selectChairCourses);
+    this.store.dispatch(ChairActions.loadChairsCourses());
 
     this.chairForm = this.formBuilder.group({
       idCourse: [null, [Validators.required]],
