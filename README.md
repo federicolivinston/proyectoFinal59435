@@ -1,27 +1,20 @@
-# ProyectoFinal59435
+# Universidad Argentina del interior
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.3.
+Es el sitio de administracion de cursos, alumnos e inscripciones de la uneversidad.
+El proyecto fue desarrollado con Angular, y Angular Materials, utilizando Json-Server como base de datos.
 
-## Development server
+![portada.png](./mkdown/portada.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Tecnologias utilizadas
+![Static Badge](https://img.shields.io/badge/ReactJS%20-%201234?style=plastic&logo=react&logoColor=ffffff&labelColor=%2361DAFB&color=%2361DAFB) ![Static Badge](https://img.shields.io/badge/FireStore%20-%201234?style=plastic&logo=firebase&logoColor=ffffff&labelColor=%2361DAFB&color=%2361DAFB) ![Static Badge](https://img.shields.io/badge/Chakra%20UI%20-%201234?style=plastic&logo=chakraui&logoColor=ffffff&labelColor=%2361DAFB&color=%2361DAFB) ![Static Badge](https://img.shields.io/badge/Vite%20-%201234?style=plastic&logo=vite&logoColor=ffffff&labelColor=%2361DAFB&color=%2361DAFB) ![Static Badge](https://img.shields.io/badge/React%20Router-%201234?style=plastic&logo=reactrouter&logoColor=ffffff&labelColor=%2361DAFB&color=%2361DAFB) ![Static Badge](https://img.shields.io/badge/Sweet%20Alert%202-%201234?style=plastic&logoColor=ffffff&labelColor=%2361DAFB&color=%2361DAFB)
 
-## Code scaffolding
+## Descripción del Proyecto
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+La aplicacion esta desarrollada como spa (single page application), utilizando ReactJS como tecnologia principal, cuenta con un catalogo de productos, que en la home trae los productos designados como destacados creando una opcion para mostrar aquellos productos que se desea impulsar, luego la navegacion del mismo es por categoria.
+Cada producto tiene un detalle que permite ver los datos completos y acceder a realizar el pedido del mismo ingresandolo al carrito.
+El carrito de compras contiene la lista de productos ingresados y permite modificar la cantidad de los mismos, quitar uno o todos los productos agregados, o ir al checkout para finalizar la compra.
+Finalmente el checkout solicita datos de facturacion y contacto para finalizar la compra registrando la orden, en caso de que al momento de generar la orden el stock de alguno de los productos solicitados no cubra el pedido, la orden se genera y se le comunica al cliente la situacion indicandole que se comunicaran con el para resolverlo.
 
-## Build
+### Instalacion
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Para instalar la aplicacion clonar el repositorio y crear las variables de entorno que se especifican en el archivo sample_env.txt con los valores correspondientes.
